@@ -86,28 +86,35 @@
                     <h3 class="text-lg font-semibold text-gray-900 mb-4">Reviews</h3>
                     
                     <!-- Review Form -->
-                    <div class="mb-6">
-                        <form action="{{ route('review_post', $film->id) }}" method="POST">
-                            @csrf
-                        <textarea 
-                            class="w-full p-3 border border-gray-300 rounded-lg resize-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" 
-                            rows="3" 
-                            placeholder="Type your review here" name="review">
-                        </textarea>
-                        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mt-3 gap-3">
-                            <div class="flex items-center space-x-4">
-                                <span class="text-sm text-gray-600">Rating</span>
-                                <div class="flex items-center space-x-2">
-                                    <input type="number" class="w-12 px-2 py-1 border border-gray-300 rounded text-center text-sm" placeholder="8" min="1" max="10" name="rating">
-                                    <span class="text-sm text-gray-600">/10</span>
+                    @auth
+                        <div class="mb-6">
+                            <form action="{{ route('review_post', $film->id) }}" method="POST">
+                                @csrf
+                                <textarea 
+                                    class="w-full p-3 border border-gray-300 rounded-lg resize-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" 
+                                    rows="3" 
+                                    placeholder="Type your review here" name="review"></textarea>
+
+                                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mt-3 gap-3">
+                                    <div class="flex items-center space-x-4">
+                                        <span class="text-sm text-gray-600">Rating</span>
+                                        <div class="flex items-center space-x-2">
+                                            <input type="number" name="rating" class="w-12 px-2 py-1 border border-gray-300 rounded text-center text-sm" placeholder="8" min="1" max="10">
+                                            <span class="text-sm text-gray-600">/10</span>
+                                        </div>
+                                    </div>
+                                    <button class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium">
+                                        Submit
+                                    </button>
                                 </div>
-                            </div>
-                            <button class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium">
-                                Submit
-                            </button>
+                            </form>
                         </div>
-                    </form>
-                    </div>
+                    @else
+                        <p class="text-sm text-gray-600 italic">
+                            <a href="{{ route('login') }}" class="text-blue-600 hover:underline">Log in</a> untuk membuat review.
+                        </p>
+                    @endauth
+
 
                     <!-- Reviews List -->
                     <div class="space-y-4">
