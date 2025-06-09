@@ -4,7 +4,11 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('base');
+    return view('user.base');
+});
+
+Route::get('/detail', function () {
+    return view('user.detailfilm');
 });
 
 Route::get('/dashboard', function () {
