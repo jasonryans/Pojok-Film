@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('link_trailer');
             $table->integer('rating');
             $table->integer('duration');
-            $table->integer('release_date');
+            $table->date('release_date');
             $table->timestamps();
         });
     }

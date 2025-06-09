@@ -1,15 +1,16 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\FilmController;
+use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\ProfileController;
 
 Route::get('/', function () {
     return view('user.base');
-});
+})->name('home');
 
-Route::get('/detail', function () {
-    return view('user.detailfilm');
-});
+Route::get('/detail/{id}', [FilmController::class, 'show'])->name('detailfilm');
+Route::post('/detail/{id}', [ReviewController::class, 'store'])->name('review_post')->middleware('auth');;
 
 Route::get('/dashboard', function () {
     return view('dashboard');
