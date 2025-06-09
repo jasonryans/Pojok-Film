@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Film;
 use App\Models\Review;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -33,6 +34,14 @@ class ReviewController extends Controller
                 "user_id" => $user_id,
                 "film_id" => $film_id
             ]);
+
+            // update rating
+            $film = Film::findOrFail($id);
+
+            $average = Review::where('film_id', $film_id)->avg('rating');
+
+            $film->rating = round($average, 2);
+            $film->save();
 
             return redirect()->route('detailfilm', $id)->with('success', 'Review berhasil dibuat!');
         } else {

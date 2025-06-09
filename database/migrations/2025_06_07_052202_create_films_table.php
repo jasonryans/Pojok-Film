@@ -17,7 +17,7 @@ return new class extends Migration
             $table->text('description');
             $table->string('poster');
             $table->string('link_trailer');
-            $table->integer('rating');
+            $table->float('rating');
             $table->integer('duration');
             $table->date('release_date');
             $table->timestamps();

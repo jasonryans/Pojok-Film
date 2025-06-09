@@ -17,7 +17,7 @@
                     <div class="flex items-start space-x-4 lg:space-x-6 mb-4 lg:mb-0">
                         <!-- Movie Poster -->
                         <div class="flex-shrink-0">
-                            <div class="w-24 h-36 lg:w-32 lg:h-48 bg-gray-200 rounded-lg border-2 border-gray-300 overflow-hidden">
+                            <div class="w-48 h-72 lg:w-64 lg:h-96 bg-gray-200 rounded-lg border-2 border-gray-300 overflow-hidden">
                                 <img src="{{ $film->poster ? asset('storage/' . $film->poster) : 'https://via.placeholder.com/300x400?text=No+Image' }}" 
                                     alt="Poster Film" 
                                     class="w-full h-full object-cover">
@@ -111,7 +111,7 @@
                         </div>
                     @else
                         <p class="text-sm text-gray-600 italic">
-                            <a href="{{ route('login') }}" class="text-blue-600 hover:underline">Log in</a> untuk membuat review.
+                            <a href="{{ route('login', ['redirect' => url()->current()]) }}" class="text-blue-600 hover:underline">Log in</a> untuk membuat review.
                         </p>
                     @endauth
 
