@@ -114,8 +114,39 @@
                             <a href="{{ route('login', ['redirect' => url()->current()]) }}" class="text-blue-600 hover:underline">Log in</a> untuk membuat review.
                         </p>
                     @endauth
+                    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+                    @if(session('success'))
+                    <script>
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Sukses!',
+                            text: '{{ session('success') }}',
+                            confirmButtonColor: '#3085d6',
+                        });
+                    </script>
+                @endif
 
+                @if(session('error'))
+                    <script>
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops!',
+                            text: '{{ session('error') }}',
+                            confirmButtonColor: '#d33',
+                        });
+                    </script>
+                @endif
 
+                @if ($errors->any())
+                    <script>
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Gagal',
+                            html: `{!! implode('<br>', $errors->all()) !!}`,
+                            confirmButtonColor: '#d33',
+                        });
+                    </script>
+                @endif
                     <!-- Reviews List -->
                     <div class="space-y-4">
                         @foreach($film->reviews as $index => $review)
