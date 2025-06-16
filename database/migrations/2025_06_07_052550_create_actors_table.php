@@ -13,14 +13,14 @@ return new class extends Migration
     {
         Schema::create('actors', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->date('born_date');
-            $table->string('photo');
-            $table->text('description');
-            $table->boolean('gender')->default(1); // 1 = male, 0 = female
+            $table->string('nama');
+            $table->text('biografi')->nullable();
+            $table->date('tanggal_lahir')->nullable();
+            $table->string('foto')->nullable(); // upload foto opsional
             $table->timestamps();
         });
     }
+
 
     /**
      * Reverse the migrations.

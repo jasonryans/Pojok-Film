@@ -9,11 +9,11 @@ use Illuminate\Support\Facades\Auth;
 
 class ReviewController extends Controller
 {
-    public function store(Request $request, $id){
-        
+    public function store(Request $request, $id)
+    {
         $validated = $request->validate([
             'review' => 'required|string',
-            'rating' => 'required|integer|min:1|max:10,',
+            'rating' => 'required|integer|min:1|max:10',
         ], [
             'review.required' => 'Review tidak boleh kosong.',
             'rating.required' => 'Rating wajib diisi.',
@@ -22,24 +22,17 @@ class ReviewController extends Controller
             'rating.max' => 'Rating maksimal adalah 10.',
         ]);
 
-        if ($validated){
-            $review = $request->review;
-            $rating = $request->rating;
-            $user_id = Auth::id();
-            $film_id = $id;
-
+        if ($validated) {
             Review::create([
-                "review" => $review,
-                "rating" => $rating,
-                "user_id" => $user_id,
-                "film_id" => $film_id
+                'review' => $request->review,
+                'rating' => $request->rating,
+                'user_id' => Auth::id(),
+                'film_id' => $id,
             ]);
 
-            // update rating
+            // Update film rating average
             $film = Film::findOrFail($id);
-
-            $average = Review::where('film_id', $film_id)->avg('rating');
-
+            $average = Review::where('film_id', $id)->avg('rating');
             $film->rating = round($average, 2);
             $film->save();
 
@@ -47,6 +40,21 @@ class ReviewController extends Controller
         } else {
             return back()->withInput();
         }
+    }
 
+    // ✅ Admin: View all reviews
+    public function index()
+    {
+        $reviews = Review::with('film', 'user')->latest()->get();
+        return view('reviews.index', compact('reviews'));
+    }
+
+    // ✅ Admin: Delete review
+    public function destroy($id)
+    {
+        $review = Review::findOrFail($id);
+        $review->delete();
+
+        return redirect()->route('reviews.index')->with('success', 'Komentar berhasil dihapus.');
     }
 }

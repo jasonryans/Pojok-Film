@@ -4,6 +4,17 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FilmController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ActorController;
+// use App\Http\Controllers\CommentController;
+
+Route::get('/admin/reviews', [ReviewController::class, 'index'])->name('reviews.index');
+Route::delete('/admin/reviews/{id}', [ReviewController::class, 'destroy'])->name('reviews.destroy');
+
+// Route::resource('/reviews', ReviewController::class)->only(['index', 'destroy']); 
+// Route::resource('/comments', CommentController::class)->only(['index', 'destroy'
+Route::resource('/films', FilmController::class);
+Route::resource('/actors', ActorController::class);
+
 
 Route::get('/', function () {
     return view('user.base');

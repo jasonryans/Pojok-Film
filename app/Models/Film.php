@@ -3,14 +3,26 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Film extends Model
 {
+    use HasFactory;
+
+    protected $fillable = [
+        'judul', 'sinopsis', 'genre', 'tahun', 'poster', 'trailer_link', 'deskripsi'
+    ];
+
     public function reviewers()
     {
         return $this->belongsToMany(User::class, 'reviews')
-            ->withPivot('rating', 'comment')
+            ->withPivot('rating', 'review')
             ->withTimestamps();
+    }
+
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
     }
 
     public function genres()
@@ -23,10 +35,14 @@ class Film extends Model
         return $this->belongsToMany(Actor::class);
     }
 
-    public function reviews()
+    public function comments()
     {
-        return $this->hasMany(Review::class);
+        return $this->hasMany(Comment::class);
     }
 
-
+    public function averageRating()
+    {
+        return $this->reviews()->avg('rating');
+    }
 }
+
