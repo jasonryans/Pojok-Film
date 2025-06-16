@@ -13,15 +13,16 @@ return new class extends Migration
     {
         Schema::create('films', function (Blueprint $table) {
             $table->id();
-            $table->string('judul');
-            $table->text('sinopsis');
-            $table->string('genre');
-            $table->integer('tahun');
-            $table->string('poster')->nullable(); // path gambar
+            $table->string('name');
+            $table->text('description');
+            $table->string('poster');
+            $table->string('link_trailer');
+            $table->integer('rating');
+            $table->integer('duration');
+            $table->integer('release_date');
             $table->timestamps();
         });
     }
-
 
     /**
      * Reverse the migrations.
