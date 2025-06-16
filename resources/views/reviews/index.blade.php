@@ -21,8 +21,8 @@
             <tbody>
                 @foreach ($reviews as $review)
                     <tr>
-                        <td class="border px-4 py-2">{{ $review->user->name }}</td>
-                        <td class="border px-4 py-2">{{ $review->film->judul }}</td>
+                        <td class="border px-4 py-2">{{ $review->user->username }}</td>
+                        <td class="border px-4 py-2">{{ $review->film->name }}</td>
                         <td class="border px-4 py-2">{{ $review->rating }}/10</td>
                         <td class="border px-4 py-2">{{ $review->review }}</td>
                         <td class="border px-4 py-2">

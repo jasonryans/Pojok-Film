@@ -10,11 +10,11 @@
             @csrf
             <div>
                 <label>Judul</label>
-                <input type="text" name="judul" class="w-full border rounded p-2" required>
+                <input type="text" name="title" class="w-full border rounded p-2" required>
             </div>
             <div>
                 <label>Sinopsis</label>
-                <textarea name="sinopsis" class="w-full border rounded p-2" required></textarea>
+                <textarea name="description" class="w-full border rounded p-2" required></textarea>
             </div>
             <div>
                 <label>Genre</label>

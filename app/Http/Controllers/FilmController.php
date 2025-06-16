@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Film;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class FilmController extends Controller
 {
@@ -11,6 +12,16 @@ class FilmController extends Controller
     {
         $films = Film::all();
         return view('films.index', compact('films'));
+    }
+
+    public function show($id){
+        $film = Film::where('id', $id)->firstOrFail();
+    
+        $film->updated_at = Carbon::parse($film->release_date)->format('Y');
+    
+        return view('user.detailfilm', [
+            "film" => $film
+        ]);
     }
 
     public function create()
