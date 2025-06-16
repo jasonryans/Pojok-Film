@@ -21,20 +21,20 @@ class ActorController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nama' => 'required',
-            'biografi' => 'nullable',
-            'tanggal_lahir' => 'nullable|date',
+            'name' => 'required|string|max:100',
+            'tanggal_lahir' => 'required|date',
+            'jenis_kelamin' => 'required|in:Laki-laki,Perempuan',
+            'deskripsi' => 'nullable|string',
             'foto' => 'nullable|image|mimes:jpg,jpeg,png'
         ]);
 
-        $actor = new Actor($request->except('foto'));
+        $data = $request->only(['name', 'tanggal_lahir', 'jenis_kelamin', 'deskripsi']);
 
         if ($request->hasFile('foto')) {
-            $fotoPath = $request->file('foto')->store('foto_aktor', 'public');
-            $actor->foto = $fotoPath;
+            $data['foto'] = $request->file('foto')->store('actors', 'public');
         }
 
-        $actor->save();
+        Actor::create($data);
 
         return redirect()->route('actors.index')->with('success', 'Aktor berhasil ditambahkan.');
     }
@@ -47,22 +47,22 @@ class ActorController extends Controller
     public function update(Request $request, Actor $actor)
     {
         $request->validate([
-            'nama' => 'required',
-            'biografi' => 'nullable',
-            'tanggal_lahir' => 'nullable|date',
+            'name' => 'required|string|max:100',
+            'tanggal_lahir' => 'required|date',
+            'jenis_kelamin' => 'required|in:Laki-laki,Perempuan',
+            'deskripsi' => 'nullable|string',
             'foto' => 'nullable|image|mimes:jpg,jpeg,png'
         ]);
 
-        $actor->fill($request->except('foto'));
+        $data = $request->only(['name', 'tanggal_lahir', 'jenis_kelamin', 'deskripsi']);
 
         if ($request->hasFile('foto')) {
-            $fotoPath = $request->file('foto')->store('foto_aktor', 'public');
-            $actor->foto = $fotoPath;
+            $data['foto'] = $request->file('foto')->store('actors', 'public');
         }
 
-        $actor->save();
+        $actor->update($data);
 
-        return redirect()->route('actors.index')->with('success', 'Aktor berhasil diperbarui.');
+        return redirect()->route('actors.index')->with('success', 'Aktor berhasil diupdate.');
     }
 
     public function destroy(Actor $actor)
@@ -70,4 +70,10 @@ class ActorController extends Controller
         $actor->delete();
         return redirect()->route('actors.index')->with('success', 'Aktor berhasil dihapus.');
     }
+
+    public function show(Actor $actor)
+    {
+        return view('actors.show', compact('actor'));
+    }
+
 }

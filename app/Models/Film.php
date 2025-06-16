@@ -16,22 +16,35 @@ class Film extends Model
         'poster',
         'rating',
     ];
-    public function reviewers()
+            public function reviewers()
     {
-        return $this->belongsToMany(User::class, 'reviews')
-            ->withPivot('rating', 'comment')
+        return $this->belongsToMany(User::class, 'reviews', 'film_id', 'user_id')
+            ->withPivot('rating', 'review')
             ->withTimestamps();
     }
 
-    public function genres()
+
+        public function genres()
     {
-        return $this->belongsToMany(Genre::class);
+        return $this->belongsToMany(Genre::class, 'films_genres', 'film_id', 'genre_id');
     }
 
-    public function actor()
+
+    // public function genres()
+    // {
+    //     return $this->belongsToMany(Genre::class);
+    // }
+
+    // public function actor()
+    // {
+    //     return $this->belongsToMany(Actor::class);
+    // }
+    // app/Models/Film.php
+    public function actors()
     {
-        return $this->belongsToMany(Actor::class);
+        return $this->belongsToMany(Actor::class, 'actors_films', 'film_id', 'actor_id');
     }
+
 
     public function reviews()
     {

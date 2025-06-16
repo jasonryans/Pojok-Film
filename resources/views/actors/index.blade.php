@@ -1,45 +1,48 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            Daftar Aktor
-        </h2>
-    </x-slot>
+@extends('layouts.app')
 
-    <div class="py-6 px-6">
-        <a href="{{ route('actors.create') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-            + Tambah Aktor
-        </a>
-
-        @if(session('success'))
-            <div class="mt-4 text-green-600">{{ session('success') }}</div>
-        @endif
-
-        <div class="mt-6">
-            <table class="min-w-full bg-white rounded">
-                <thead>
-                    <tr>
-                        <th class="px-4 py-2 border">Nama</th>
-                        <th class="px-4 py-2 border">Tanggal Lahir</th>
-                        <th class="px-4 py-2 border">Aksi</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($actors as $actor)
-                        <tr>
-                            <td class="border px-4 py-2">{{ $actor->nama }}</td>
-                            <td class="border px-4 py-2">{{ $actor->tanggal_lahir }}</td>
-                            <td class="border px-4 py-2">
-                                <a href="{{ route('actors.edit', $actor) }}" class="text-blue-600">Edit</a> |
-                                <form action="{{ route('actors.destroy', $actor) }}" method="POST" class="inline">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button onclick="return confirm('Hapus aktor ini?')" class="text-red-600 ml-2">Hapus</button>
-                                </form>
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
+@section('content')
+<div class="max-w-3xl mx-auto py-8">
+    <h1 class="text-2xl font-bold mb-4">Daftar Aktor</h1>
+    <a href="{{ route('actors.create') }}" class="btn btn-primary mb-3">Tambah Aktor</a>
+    @if(session('success'))
+        <div class="alert alert-success mb-3">{{ session('success') }}</div>
+    @endif
+    <div class="overflow-x-auto rounded-xl shadow">
+        <table class="table w-full">
+            <thead>
+                <tr>
+                    <th>Foto</th>
+                    <th>Nama</th>
+                    <th>Tanggal Lahir</th>
+                    <th>Jenis Kelamin</th>
+                    <th>Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+            @foreach($actors as $actor)
+                <tr class="border-b hover:bg-gray-50">
+                    <td>
+                        @if($actor->foto)
+                            <img src="{{ asset('storage/' . $actor->foto) }}" alt="Foto" class="w-12 h-12 rounded-full object-cover">
+                        @else
+                            <span class="italic text-gray-400">No Image</span>
+                        @endif
+                    </td>
+                    <td>{{ $actor->name }}</td>
+                    <td>{{ $actor->tanggal_lahir }}</td>
+                    <td>{{ $actor->jenis_kelamin }}</td>
+                    <td class="flex gap-1">
+                        <a href="{{ route('actors.edit', $actor) }}" class="btn btn-warning btn-sm">Edit</a>
+                        <form action="{{ route('actors.destroy', $actor) }}" method="POST" onsubmit="return confirm('Yakin hapus aktor?')" class="inline">
+                            @csrf @method('DELETE')
+                            <button class="btn btn-error btn-sm">Hapus</button>
+                        </form>
+                        <a href="{{ route('actors.show', $actor) }}" class="btn btn-info btn-sm">Detail</a>
+                    </td>
+                </tr>
+            @endforeach
+            </tbody>
+        </table>
     </div>
-</x-app-layout>
+</div>
+@endsection

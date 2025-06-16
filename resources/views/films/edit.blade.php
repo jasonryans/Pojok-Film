@@ -1,44 +1,54 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            Edit Film
-        </h2>
-    </x-slot>
+@extends('layouts.app')
 
-    <div class="py-6 px-6">
-        <form action="{{ route('films.update', $film) }}" method="POST" enctype="multipart/form-data" class="space-y-4">
-            @csrf
-            @method('PUT')
+@section('content')
+<div class="max-w-xl mx-auto py-8">
+    <h1 class="text-2xl font-bold mb-4">Edit Film</h1>
 
-            <div>
-                <label>Judul</label>
-                <input type="text" name="name" value="{{ $film->name }}" class="w-full border rounded p-2" required>
-            </div>
-            <div>
-                <label>Sinopsis</label>
-                <textarea name="description" class="w-full border rounded p-2" required>{{ $film->description }}</textarea>
-            </div>
-            <div>
-                <label>Genre</label>
-                <input type="text" name="genre" value="{{ $film->genre }}" class="w-full border rounded p-2" required>
-            </div>
-            <div>
-                <label>Tahun</label>
-                <input type="number" name="tahun" value="{{ $film->release_date }}" class="w-full border rounded p-2" required>
-            </div>
-            <div>
-                <label>Poster Saat Ini:</label><br>
-                @if($film->poster)
-                    <img src="{{ asset('storage/' . $film->poster) }}" width="150" class="rounded mb-2">
-                @else
-                    <p>(Belum ada poster)</p>
-                @endif
-            </div>
-            <div>
-                <label>Ganti Poster (opsional):</label>
-                <input type="file" name="poster" class="w-full">
-            </div>
-            <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">Update</button>
-        </form>
-    </div>
-</x-app-layout>
+    <form action="{{ route('films.update', $film) }}" method="POST" enctype="multipart/form-data" class="space-y-4">
+        @csrf @method('PUT')
+
+        <div>
+            <label class="block font-medium">Judul</label>
+            <input type="text" name="name" value="{{ old('name', $film->name) }}" class="input input-bordered w-full" required>
+        </div>
+        <div>
+            <label class="block font-medium">Deskripsi</label>
+            <textarea name="description" class="textarea textarea-bordered w-full" required>{{ old('description', $film->description) }}</textarea>
+        </div>
+        <div>
+            <label class="block font-medium">Genre</label>
+            <select name="genre[]" multiple required class="select select-bordered w-full">
+                @foreach($genres as $genre)
+                    <option value="{{ $genre->id }}"
+                        {{ in_array($genre->id, $film->genres->pluck('id')->toArray()) ? 'selected' : '' }}>
+                        {{ $genre->name }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
+        <div>
+            <label class="block font-medium">Tahun Rilis</label>
+            <input type="number" name="release_date" value="{{ old('release_date', $film->release_date) }}" class="input input-bordered w-full" required>
+        </div>
+        <div>
+            <label class="block font-medium">Durasi (menit)</label>
+            <input type="number" name="duration" value="{{ old('duration', $film->duration) }}" class="input input-bordered w-full" required>
+        </div>
+        <div>
+            <label class="block font-medium">Link Trailer</label>
+            <input type="text" name="link_trailer" value="{{ old('link_trailer', $film->link_trailer) }}" class="input input-bordered w-full" required>
+        </div>
+        <div>
+            <label class="block font-medium">Poster</label>
+            <input type="file" name="poster" class="file-input file-input-bordered w-full">
+            @if($film->poster)
+                <div class="mt-2">
+                    <img src="{{ asset('storage/' . $film->poster) }}" alt="Poster" class="w-24 rounded shadow">
+                </div>
+            @endif
+        </div>
+        <button type="submit" class="btn btn-success">Update</button>
+        <a href="{{ route('films.index') }}" class="btn btn-secondary ml-2">Kembali</a>
+    </form>
+</div>
+@endsection

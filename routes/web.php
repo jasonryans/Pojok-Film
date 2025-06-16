@@ -14,6 +14,7 @@ Route::delete('/admin/reviews/{id}', [ReviewController::class, 'destroy'])->name
 // Route::resource('/comments', CommentController::class)->only(['index', 'destroy'
 Route::resource('/films', FilmController::class);
 Route::resource('/actors', ActorController::class);
+// Route::resource('films', FilmController::class);
 
 
 Route::get('/', function () {

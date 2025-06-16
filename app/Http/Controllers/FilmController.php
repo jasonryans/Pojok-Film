@@ -3,92 +3,108 @@
 namespace App\Http\Controllers;
 
 use App\Models\Film;
+use App\Models\Genre;
 use Illuminate\Http\Request;
-use Carbon\Carbon;
-use App\Models\Genre; 
+use Illuminate\Support\Facades\Storage;
+
 class FilmController extends Controller
 {
     public function index()
     {
-        $films = Film::all();
+        $films = Film::with('genres')->get();
         return view('films.index', compact('films'));
-    }
-
-    public function show($id){
-        $film = Film::where('id', $id)->firstOrFail();
-    
-        $film->updated_at = Carbon::parse($film->release_date)->format('Y');
-    
-        return view('user.detailfilm', [
-            "film" => $film
-        ]);
     }
 
     public function create()
     {
-        $genres = Genre::all(); // Ambil semua genre dari database
-        return view('films.create', compact('genres')); // Kirim ke view
+        $genres = Genre::all();
+        return view('films.create', compact('genres'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required',
-            'description' => 'required',
-            'genre' => 'required',
-            'release_date' => 'required|date',
-            'poster' => 'nullable|image|mimes:jpg,jpeg,png',
-            'link_trailer' => 'required',
-            'duration' => 'required|integer',
-        ]);
+        'name' => 'required|string',
+        'description' => 'required|string',
+        'genre' => 'required|array',
+        'release_date' => 'required|integer',
+        'duration' => 'required|integer',
+        'link_trailer' => 'required|string',
+        'poster' => 'nullable|image|mimes:jpg,jpeg,png',
+        'actors' => 'required|array', // TAMBAHAN: wajib pilih minimal 1 aktor
+    ]);
 
-        $film = new Film($request->except('poster'));
+
+        $film = new Film();
+        $film->name = $request->name;
+        $film->description = $request->description;
+        $film->release_date = $request->release_date;
+        $film->duration = $request->duration;
+        $film->link_trailer = $request->link_trailer;
         $film->rating = 0;
 
-        // Simpan poster jika ada
         if ($request->hasFile('poster')) {
-            $posterPath = $request->file('poster')->store('posters', 'public');
-            $film->poster = $posterPath;
+            $path = $request->file('poster')->store('posters', 'public');
+            $film->poster = $path;
         }
 
         $film->save();
-
-        // Attach genre (isi tabel pivot film_genre)
         $film->genres()->attach($request->genre);
+        $film->actors()->attach($request->actors); // TAMBAHAN: simpan relasi aktor
+
 
         return redirect()->route('films.index')->with('success', 'Film berhasil ditambahkan.');
     }
 
     public function edit(Film $film)
     {
-        return view('films.edit', compact('film'));
+        $genres = Genre::all();
+        $film->load('genres');
+        return view('films.edit', compact('film', 'genres'));
     }
+   
 
     public function update(Request $request, Film $film)
     {
         $request->validate([
-            'judul' => 'required',
-            'sinopsis' => 'required',
-            'genre' => 'required',
-            'tahun' => 'required|integer',
+            'name' => 'required|string',
+            'description' => 'required|string',
+            'genre' => 'required|array',
+            'release_date' => 'required|integer',
+            'duration' => 'required|integer',
+            'link_trailer' => 'required|string',
             'poster' => 'nullable|image|mimes:jpg,jpeg,png'
         ]);
 
-        $film->fill($request->except('poster'));
-
+        $film->name = $request->name;
+        $film->description = $request->description;
+        $film->release_date = $request->release_date;
+        $film->duration = $request->duration;
+        $film->link_trailer = $request->link_trailer;
+        
         if ($request->hasFile('poster')) {
-            $posterPath = $request->file('poster')->store('posters', 'public');
-            $film->poster = $posterPath;
+            $path = $request->file('poster')->store('posters', 'public');
+            $film->poster = $path;
         }
 
         $film->save();
+        $film->genres()->sync($request->genre);
+        $film->actors()->sync($request->actors); // TAMBAHAN: update relasi aktor
 
         return redirect()->route('films.index')->with('success', 'Film berhasil diperbarui.');
     }
 
     public function destroy(Film $film)
     {
+        $film->genres()->detach();
         $film->delete();
         return redirect()->route('films.index')->with('success', 'Film berhasil dihapus.');
+    }
+
+        public function show(Film $film)
+    {
+        // Eager load relasi (genres, actors)
+        $film->load(['genres', 'actors']);
+        return view('films.show', compact('film')); 
     }
 }
