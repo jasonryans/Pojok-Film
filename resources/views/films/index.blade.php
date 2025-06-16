@@ -27,9 +27,13 @@
                 <tbody>
                     @foreach ($films as $film)
                         <tr>
-                            <td class="border px-4 py-2">{{ $film->judul }}</td>
-                            <td class="border px-4 py-2">{{ $film->genre }}</td>
-                            <td class="border px-4 py-2">{{ $film->tahun }}</td>
+                            <td class="border px-4 py-2">{{ $film->name }}</td>
+                            <td class="border px-4 py-2">
+                                @foreach ($film->genres as $genre)
+                                    <span class="inline-block bg-gray-200 text-gray-800 text-xs px-2 py-1 rounded mr-1">{{ $genre->name }}</span>
+                                @endforeach
+                            </td>
+                            <td class="border px-4 py-2">{{ $film->release_date }}</td>
                             <td class="border px-4 py-2">
                                 <a href="{{ route('films.edit', $film) }}" class="text-blue-600">Edit</a>
                                 |

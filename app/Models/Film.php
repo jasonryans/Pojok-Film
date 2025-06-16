@@ -6,6 +6,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class Film extends Model
 {
+    // App\Models\Film.php
+    protected $fillable = [
+        'name',
+        'description',
+        'release_date',
+        'link_trailer',
+        'duration',
+        'poster',
+        'rating',
+    ];
     public function reviewers()
     {
         return $this->belongsToMany(User::class, 'reviews')

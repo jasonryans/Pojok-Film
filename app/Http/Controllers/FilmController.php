@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Film;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
-
+use App\Models\Genre; 
 class FilmController extends Controller
 {
     public function index()
@@ -26,20 +26,24 @@ class FilmController extends Controller
 
     public function create()
     {
-        return view('films.create');
+        $genres = Genre::all(); // Ambil semua genre dari database
+        return view('films.create', compact('genres')); // Kirim ke view
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'judul' => 'required',
-            'sinopsis' => 'required',
+            'name' => 'required',
+            'description' => 'required',
             'genre' => 'required',
-            'tahun' => 'required|integer',
-            'poster' => 'nullable|image|mimes:jpg,jpeg,png'
+            'release_date' => 'required|date',
+            'poster' => 'nullable|image|mimes:jpg,jpeg,png',
+            'link_trailer' => 'required',
+            'duration' => 'required|integer',
         ]);
 
         $film = new Film($request->except('poster'));
+        $film->rating = 0;
 
         // Simpan poster jika ada
         if ($request->hasFile('poster')) {
@@ -48,6 +52,9 @@ class FilmController extends Controller
         }
 
         $film->save();
+
+        // Attach genre (isi tabel pivot film_genre)
+        $film->genres()->attach($request->genre);
 
         return redirect()->route('films.index')->with('success', 'Film berhasil ditambahkan.');
     }

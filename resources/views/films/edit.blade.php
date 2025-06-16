@@ -12,11 +12,11 @@
 
             <div>
                 <label>Judul</label>
-                <input type="text" name="judul" value="{{ $film->judul }}" class="w-full border rounded p-2" required>
+                <input type="text" name="name" value="{{ $film->name }}" class="w-full border rounded p-2" required>
             </div>
             <div>
                 <label>Sinopsis</label>
-                <textarea name="sinopsis" class="w-full border rounded p-2" required>{{ $film->sinopsis }}</textarea>
+                <textarea name="description" class="w-full border rounded p-2" required>{{ $film->description }}</textarea>
             </div>
             <div>
                 <label>Genre</label>
@@ -24,7 +24,7 @@
             </div>
             <div>
                 <label>Tahun</label>
-                <input type="number" name="tahun" value="{{ $film->tahun }}" class="w-full border rounded p-2" required>
+                <input type="number" name="tahun" value="{{ $film->release_date }}" class="w-full border rounded p-2" required>
             </div>
             <div>
                 <label>Poster Saat Ini:</label><br>
