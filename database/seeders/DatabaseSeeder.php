@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
         'name' => 'Test User',
         'username' => 'testuser', // ← Tambahkan ini!
         'email' => 'test@example.com',
+        'password' => bcrypt('test123'), // ← Ganti dengan password yang diinginkan
         'is_admin' => 1, // ← TAMBAHKAN INI! 1=admin, 0=bukan admin
     ]);
 
