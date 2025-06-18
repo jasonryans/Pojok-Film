@@ -1,6 +1,4 @@
-@extends('layouts.app')
-
-@section('content')
+<x-app-layout>
 <div class="max-w-2xl mx-auto py-8">
     <div class="flex items-start gap-6">
         @if($film->poster)
@@ -71,4 +69,4 @@
         </div>
     </div>
 </div>
-@endsection
+</x-app-layout>

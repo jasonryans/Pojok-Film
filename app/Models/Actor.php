@@ -20,6 +20,6 @@ class Actor extends Model
     // Relasi ke Film
     public function films()
     {
-        return $this->belongsToMany(Film::class, 'actors_films', 'actor_id', 'film_id');
+        return $this->belongsToMany(Film::class, 'actor_film', 'actor_id', 'film_id');
     }
 }

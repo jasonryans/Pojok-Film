@@ -1,6 +1,4 @@
-@extends('layouts.app')
-
-@section('content')
+<x-app-layout>
 <div class="max-w-xl mx-auto py-8">
     <h1 class="text-2xl font-bold mb-4">Edit Film</h1>
 
@@ -28,7 +26,7 @@
         </div>
         <div>
             <label class="block font-medium">Tahun Rilis</label>
-            <input type="number" name="release_date" value="{{ old('release_date', $film->release_date) }}" class="input input-bordered w-full" required>
+            <input type="date" name="release_date" value="{{ old('release_date', $film->release_date) }}" class="input input-bordered w-full" required>
         </div>
         <div>
             <label class="block font-medium">Durasi (menit)</label>
@@ -47,8 +45,21 @@
                 </div>
             @endif
         </div>
+
+        <div>
+            <label class="block font-medium">Actor</label>
+            <select name="actor[]" multiple required class="select select-bordered w-full">
+                @foreach($actors as $actor)
+                    <option value="{{ $actor->id }}"
+                        {{ in_array($actor->id, $film->actors->pluck('id')->toArray()) ? 'selected' : '' }}>
+                        {{ $actor->name }}
+                    </option>
+                @endforeach
+            </select>
+            <span class="text-sm text-gray-500">Tekan Ctrl/Command untuk pilih lebih dari satu</span>
+        </div>
         <button type="submit" class="btn btn-success">Update</button>
         <a href="{{ route('films.index') }}" class="btn btn-secondary ml-2">Kembali</a>
     </form>
 </div>
-@endsection
+</x-app-layout>

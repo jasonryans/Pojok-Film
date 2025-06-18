@@ -1,6 +1,4 @@
-@extends('layouts.app')
-
-@section('content')
+<x-app-layout>
 <div class="max-w-6xl mx-auto py-8">
     <h1 class="text-2xl font-bold mb-4">Daftar Film</h1>
     <a href="{{ route('films.create') }}" class="mb-4 inline-block">
@@ -57,4 +55,4 @@
     </table>
     </div>
 </div>
-@endsection
+</x-app-layout>
