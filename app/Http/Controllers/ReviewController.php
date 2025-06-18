@@ -36,7 +36,7 @@ class ReviewController extends Controller
             $film->rating = round($average, 2);
             $film->save();
 
-            return redirect()->route('detailfilm', $id)->with('success', 'Review berhasil dibuat!');
+            return redirect()->route('detailfilmUser', $id)->with('success', 'Review berhasil dibuat!');
         } else {
             return back()->withInput();
         }

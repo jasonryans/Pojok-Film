@@ -16,11 +16,12 @@ Route::resource('/actors', ActorController::class);
 
 
 Route::get('/', function () {
-    return view('user.base');
+    return view('user.coba');
 })->name('home');
 
 Route::get('/detail/{id}', [FilmController::class, 'show'])->name('detailfilm');
-Route::post('/detail/{id}', [ReviewController::class, 'store'])->name('review_post')->middleware('auth');;
+Route::post('/detail/{id}', [ReviewController::class, 'store'])->name('review_post')->middleware('auth');
+Route::get('/detail/{id}', [FilmController::class, 'showUser'])->name('detailfilmUser');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

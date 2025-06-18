@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Film;
 use App\Models\Actor;
 use App\Models\Genre;
@@ -52,7 +53,7 @@ class FilmController extends Controller
 
         $film->save();
         $film->genres()->attach($request->genre);
-        $film->actors()->attach($request->actors); // TAMBAHAN: simpan relasi aktor
+        $film->actors()->attach($request->actor); // TAMBAHAN: simpan relasi aktor
 
 
         return redirect()->route('films.index')->with('success', 'Film berhasil ditambahkan.');
@@ -115,5 +116,14 @@ class FilmController extends Controller
         // Eager load relasi (genres, actors)
         $film->load(['genres', 'actors']);
         return view('films.show', compact('film')); 
+    }
+
+    public function showUser($id){
+        $film = Film::where('id', $id)->firstOrFail();
+        $film->release_date = Carbon::parse($film->release_date)->format('Y');
+    
+        return view('user.detailfilm', [
+            "film" => $film
+        ]);
     }
 }

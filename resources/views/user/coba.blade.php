@@ -1,0 +1,17 @@
+@extends('user.base')
+@section('user.content')
+<p>ghalo</p>
+<p>ghalo</p>
+<p>ghalo</p>
+<p>ghalo</p>
+<p>ghalo</p>
+<p>ghalo</p>
+<p>ghalo</p>
+<p>ghalo</p>
+<p>ghalo</p>
+<p>ghalo</p>
+<p>ghalo</p>
+<p>ghalo</p>
+<p>ghalo</p>
+<p>ghalo</p>
+@endsection
