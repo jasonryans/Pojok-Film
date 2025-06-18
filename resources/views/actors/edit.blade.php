@@ -11,25 +11,25 @@
         </div>
         <div>
             <label class="block font-medium">Tanggal Lahir</label>
-            <input type="date" name="tanggal_lahir" value="{{ old('tanggal_lahir', $actor->tanggal_lahir) }}" class="input input-bordered w-full" required>
+            <input type="date" name="born_date" value="{{ old('born_date', $actor->born_date) }}" class="input input-bordered w-full" required>
         </div>
         <div>
             <label class="block font-medium">Jenis Kelamin</label>
-            <select name="jenis_kelamin" class="select select-bordered w-full" required>
-                <option value="Laki-laki" {{ old('jenis_kelamin', $actor->jenis_kelamin)=='Laki-laki' ? 'selected' : '' }}>Laki-laki</option>
-                <option value="Perempuan" {{ old('jenis_kelamin', $actor->jenis_kelamin)=='Perempuan' ? 'selected' : '' }}>Perempuan</option>
+            <select name="gender" class="select select-bordered w-full" required>
+                <option value="Laki-laki" {{ old('gender', $actor->gender) ? 'selected' : '' }}>Laki-laki</option>
+                <option value="Perempuan" {{ !old('gender', $actor->gender) ? 'selected' : '' }}>Perempuan</option>
             </select>
         </div>
         <div>
             <label class="block font-medium">Deskripsi</label>
-            <textarea name="deskripsi" class="textarea textarea-bordered w-full">{{ old('deskripsi', $actor->deskripsi) }}</textarea>
+            <textarea name="description" class="textarea textarea-bordered w-full">{{ old('description', $actor->description) }}</textarea>
         </div>
         <div>
             <label class="block font-medium">Foto</label>
-            <input type="file" name="foto" class="file-input file-input-bordered w-full">
-            @if($actor->foto)
+            <input type="file" name="photo" class="file-input file-input-bordered w-full">
+            @if($actor->photo)
                 <div class="mt-2">
-                    <img src="{{ asset('storage/' . $actor->foto) }}" alt="Foto" class="w-20 h-20 rounded-full object-cover">
+                    <img src="{{ asset('storage/' . $actor->photo) }}" alt="Foto" class="w-20 h-20 rounded-full object-cover">
                 </div>
             @endif
         </div>

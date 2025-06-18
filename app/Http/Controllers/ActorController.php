@@ -22,17 +22,22 @@ class ActorController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:100',
-            'tanggal_lahir' => 'required|date',
-            'jenis_kelamin' => 'required|in:Laki-laki,Perempuan',
-            'deskripsi' => 'nullable|string',
-            'foto' => 'nullable|image|mimes:jpg,jpeg,png'
+            'born_date' => 'required|date',
+            'gender' => 'required|in:Laki-laki,Perempuan',
+            'description' => 'nullable|string',
+            'photo' => 'nullable|image|mimes:jpg,jpeg,png'
         ]);
 
-        $data = $request->only(['name', 'tanggal_lahir', 'jenis_kelamin', 'deskripsi']);
+        $data = $request->only(['name', 'born_date', 'gender', 'description']);
 
-        if ($request->hasFile('foto')) {
-            $data['foto'] = $request->file('foto')->store('actors', 'public');
+        if ($request->hasFile('photo')) {
+            $data['photo'] = $request->file('photo')->store('actors', 'public');
         }
+
+        $data['gender'] = match($data['gender']) {
+            "Laki-laki" => true,
+            "Perempuan" => false
+        };
 
         Actor::create($data);
 
@@ -48,16 +53,16 @@ class ActorController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:100',
-            'tanggal_lahir' => 'required|date',
-            'jenis_kelamin' => 'required|in:Laki-laki,Perempuan',
-            'deskripsi' => 'nullable|string',
-            'foto' => 'nullable|image|mimes:jpg,jpeg,png'
+            'born_date' => 'required|date',
+            'gender' => 'required|in:Laki-laki,Perempuan',
+            'description' => 'nullable|string',
+            'photo' => 'nullable|image|mimes:jpg,jpeg,png'
         ]);
 
-        $data = $request->only(['name', 'tanggal_lahir', 'jenis_kelamin', 'deskripsi']);
+        $data = $request->only(['name', 'born_date', 'gender', 'description']);
 
-        if ($request->hasFile('foto')) {
-            $data['foto'] = $request->file('foto')->store('actors', 'public');
+        if ($request->hasFile('photo')) {
+            $data['photo'] = $request->file('photo')->store('actors', 'public');
         }
 
         $actor->update($data);

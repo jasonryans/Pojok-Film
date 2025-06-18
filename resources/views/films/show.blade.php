@@ -32,8 +32,8 @@
         <div class="flex gap-2 mt-2 flex-wrap">
             @foreach($film->actors->take(4) as $actor)
                 <div class="flex flex-col items-center">
-                    @if($actor->foto)
-                        <img src="{{ asset('storage/' . $actor->foto) }}" class="w-10 h-10 rounded-full object-cover mb-1" alt="{{ $actor->name }}">
+                    @if($actor->photo)
+                        <img src="{{ asset('storage/' . $actor->photo) }}" class="w-10 h-10 rounded-full object-cover mb-1" alt="{{ $actor->name }}">
                     @endif
                     <span class="text-xs text-center">{{ $actor->name }}</span>
                 </div>

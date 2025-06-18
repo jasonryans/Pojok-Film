@@ -11,10 +11,10 @@ class Actor extends Model
 
     protected $fillable = [
         'name',
-        'tanggal_lahir',
-        'foto',
-        'deskripsi',
-        'jenis_kelamin'
+        'born_date',
+        'photo',
+        'description',
+        'gender'
     ];
 
     // Relasi ke Film

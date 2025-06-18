@@ -22,15 +22,15 @@
             @foreach($actors as $actor)
                 <tr class="border-b hover:bg-gray-50">
                     <td>
-                        @if($actor->foto)
-                            <img src="{{ asset('storage/' . $actor->foto) }}" alt="Foto" class="w-12 h-12 rounded-full object-cover">
+                        @if($actor->photo)
+                            <img src="{{ asset('storage/' . $actor->photo) }}" alt="Foto" class="w-12 h-12 rounded-full object-cover">
                         @else
                             <span class="italic text-gray-400">No Image</span>
                         @endif
                     </td>
                     <td>{{ $actor->name }}</td>
-                    <td>{{ $actor->tanggal_lahir }}</td>
-                    <td>{{ $actor->jenis_kelamin }}</td>
+                    <td>{{ $actor->born_date }}</td>
+                    <td>{{ $actor->gender ? "Laki-laki" : "Perempuan" }}</td>
                     <td class="flex gap-1">
                         <a href="{{ route('actors.edit', $actor) }}" class="btn btn-warning btn-sm">Edit</a>
                         <form action="{{ route('actors.destroy', $actor) }}" method="POST" onsubmit="return confirm('Yakin hapus aktor?')" class="inline">

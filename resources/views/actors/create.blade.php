@@ -11,11 +11,11 @@
         </div>
         <div>
             <label class="block font-medium">Tanggal Lahir</label>
-            <input type="date" name="tanggal_lahir" class="input input-bordered w-full" required>
+            <input type="date" name="born_date" class="input input-bordered w-full" required>
         </div>
         <div>
             <label class="block font-medium">Jenis Kelamin</label>
-            <select name="jenis_kelamin" class="select select-bordered w-full" required>
+            <select name="gender" class="select select-bordered w-full" required>
                 <option value="">Pilih</option>
                 <option value="Laki-laki">Laki-laki</option>
                 <option value="Perempuan">Perempuan</option>
@@ -23,11 +23,11 @@
         </div>
         <div>
             <label class="block font-medium">Deskripsi</label>
-            <textarea name="deskripsi" class="textarea textarea-bordered w-full"></textarea>
+            <textarea name="description" class="textarea textarea-bordered w-full"></textarea>
         </div>
         <div>
             <label class="block font-medium">Foto</label>
-            <input type="file" name="foto" class="file-input file-input-bordered w-full">
+            <input type="file" name="photo" class="file-input file-input-bordered w-full">
         </div>
         <button type="submit" class="btn btn-primary">Simpan</button>
         <a href="{{ route('actors.index') }}" class="btn btn-secondary ml-2">Kembali</a>
