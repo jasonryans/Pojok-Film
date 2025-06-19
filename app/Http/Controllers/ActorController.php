@@ -65,6 +65,11 @@ class ActorController extends Controller
             $data['photo'] = $request->file('photo')->store('actors', 'public');
         }
 
+        $data['gender'] = match($data['gender']) {
+            "Laki-laki" => true,
+            "Perempuan" => false
+        };
+
         $actor->update($data);
 
         return redirect()->route('actors.index')->with('success', 'Aktor berhasil diupdate.');
