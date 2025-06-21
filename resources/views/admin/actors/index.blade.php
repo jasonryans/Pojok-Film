@@ -44,8 +44,8 @@
                     <td class="py-3 px-4 dark:text-gray-200">{{ $actor->born_date }}</td>
                     <td class="py-3 px-4 dark:text-gray-200">{{ $actor->gender ? "Laki-laki" : "Perempuan" }}</td>
                     <td class="py-2 px-4 flex gap-1">
-                        <a href="{{ route('actors.edit', $actor) }}" class="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded text-sm">Edit</a>
-                        <form action="{{ route('actors.destroy', $actor) }}" method="POST" onsubmit="return confirm('Yakin hapus film?')" class="inline">
+                        <a href="{{ route('admin.actors.edit', $actor) }}" class="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded text-sm">Edit</a>
+                        <form action="{{ route('admin.actors.destroy', $actor) }}" method="POST" onsubmit="return confirm('Yakin hapus film?')" class="inline">
                             @csrf @method('DELETE')
                             <button type="submit" class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm">Hapus</button>
                         </form>

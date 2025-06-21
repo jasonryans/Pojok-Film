@@ -6,7 +6,7 @@
     </x-slot>
 
     <div class="py-6 px-6">
-        <form action="{{ route('films.update', $film) }}" method="POST" enctype="multipart/form-data" class="space-y-4">
+        <form action="{{ route('admin.films.update', $film) }}" method="POST" enctype="multipart/form-data" class="space-y-4">
             @csrf
             @method('PUT')
             
@@ -77,7 +77,7 @@
             
             <div class="flex space-x-2">
                 <button type="submit" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded">Update</button>
-                <a href="{{ route('films.index') }}" class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded">Kembali</a>
+                <a href="{{ route('admin.films.index') }}" class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded">Kembali</a>
             </div>
         </form>
     </div>

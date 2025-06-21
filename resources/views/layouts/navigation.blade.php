@@ -3,7 +3,7 @@
     <div class="flex flex-col h-full">
         <!-- Logo Section -->
         <div class="flex items-center justify-center h-16 border-b border-gray-100 dark:border-gray-700">
-            <a href="{{ route('dashboard') }}">
+            <a href="{{ route('admin.dashboard') }}">
                 <x-application-logo class="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" />
             </a>
         </div>
@@ -12,8 +12,8 @@
         <div class="flex-1 px-4 py-6 space-y-2">
             <div class="space-y-1">
                 <x-nav-link 
-                    :href="route('dashboard')" 
-                    :active="request()->routeIs('dashboard')"
+                    :href="route('admin.dashboard')" 
+                    :active="request()->routeIs('admin.dashboard')"
                     class="flex items-center w-full px-4 py-3 text-left rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200"
                 >
                     <svg class="w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 20 20">
@@ -23,8 +23,8 @@
                 </x-nav-link>
 
                 <x-nav-link 
-                    :href="route('films.create')" 
-                    :active="request()->routeIs('films.create')"
+                    :href="route('admin.films.create')" 
+                    :active="request()->routeIs('admin.films.create')"
                     class="flex items-center w-full px-4 py-3 text-left rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200"
                 >
                     <svg class="w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 20 20">
@@ -34,8 +34,8 @@
                 </x-nav-link>
 
                 <x-nav-link 
-                    :href="route('actors.create')" 
-                    :active="request()->routeIs('actors.create')"
+                    :href="route('admin.actors.create')" 
+                    :active="request()->routeIs('admin.actors.create')"
                     class="flex items-center w-full px-4 py-3 text-left rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200"
                 >
                     <svg class="w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 20 20">
@@ -45,8 +45,8 @@
                 </x-nav-link>
 
                 <x-nav-link 
-                    :href="route('films.index')" 
-                    :active="request()->routeIs('films.index')"
+                    :href="route('admin.films.index')" 
+                    :active="request()->routeIs('admin.films.index')"
                     class="flex items-center w-full px-4 py-3 text-left rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200"
                 >
                     <svg class="w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 20 20">
@@ -56,8 +56,8 @@
                 </x-nav-link>
 
                 <x-nav-link 
-                    :href="route('actors.index')" 
-                    :active="request()->routeIs('actors.index')"
+                    :href="route('admin.actors.index')" 
+                    :active="request()->routeIs('admin.actors.index')"
                     class="flex items-center w-full px-4 py-3 text-left rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200"
                 >
                     <svg class="w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 20 20">
@@ -101,7 +101,7 @@
                     x-transition:leave-end="opacity-0 scale-95"
                     class="absolute bottom-full left-4 right-4 mb-2 bg-white dark:bg-gray-700 rounded-md shadow-lg py-1 z-50 border border-gray-200 dark:border-gray-600"
                 >
-                    <a href="{{ route('profile.edit') }}" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600">
+                    <a href="{{ route('admin.profile.edit') }}" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600">
                         {{ __('Profile') }}
                     </a>
                     
@@ -151,7 +151,7 @@
         <div class="flex flex-col h-full">
             <!-- Logo Section -->
             <div class="flex items-center justify-center h-16 border-b border-gray-100 dark:border-gray-700">
-                <a href="{{ route('dashboard') }}">
+                <a href="{{ route('admin.dashboard') }}">
                     <x-application-logo class="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" />
                 </a>
             </div>
@@ -159,7 +159,7 @@
             <!-- Mobile Navigation Links -->
             <div class="flex-1 px-4 py-6 space-y-2">
                 <div class="space-y-1">
-                    <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" @click="open = false">
+                    <x-responsive-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')" @click="open = false">
                         <div class="flex items-center">
                             <svg class="w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 20 20">
                                 <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"/>
@@ -167,7 +167,7 @@
                             {{ __('Dashboard') }}
                         </div>
                     </x-responsive-nav-link>
-                    <x-responsive-nav-link :href="route('films.create')" :active="request()->routeIs('films.create')" @click="open = false">
+                    <x-responsive-nav-link :href="route('admin.films.create')" :active="request()->routeIs('admin.films.create')" @click="open = false">
                         <div class="flex items-center">
                             <svg class="w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 20 20">
                                 <path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z"/>
@@ -175,7 +175,7 @@
                             {{ __('Tambah Film') }}
                         </div>
                     </x-responsive-nav-link>
-                    <x-responsive-nav-link :href="route('actors.create')" :active="request()->routeIs('actors.create')" @click="open = false">
+                    <x-responsive-nav-link :href="route('admin.actors.create')" :active="request()->routeIs('admin.actors.create')" @click="open = false">
                         <div class="flex items-center">
                             <svg class="w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 20 20">
                                 <path d="M8 9a3 3 0 100-6 3 3 0 000 6zM8 11a6 6 0 016 6H2a6 6 0 016-6zM16 7a1 1 0 10-2 0v1h-1a1 1 0 100 2h1v1a1 1 0 102 0v-1h1a1 1 0 100-2h-1V7z"/>
@@ -183,7 +183,7 @@
                             {{ __('Tambah Aktor') }}
                         </div>
                     </x-responsive-nav-link>
-                    <x-responsive-nav-link :href="route('films.index')" :active="request()->routeIs('films.index')" @click="open = false">
+                    <x-responsive-nav-link :href="route('admin.films.index')" :active="request()->routeIs('admin.films.index')" @click="open = false">
                         <div class="flex items-center">
                             <svg class="w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 20 20">
                                 <path d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 7a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1zM2 11a2 2 0 012-2h12a2 2 0 012 2v4a2 2 0 01-2 2H4a2 2 0 01-2-2v-4z"/>
@@ -191,7 +191,7 @@
                             {{ __('List Film') }}
                         </div>
                     </x-responsive-nav-link>
-                    <x-responsive-nav-link :href="route('actors.index')" :active="request()->routeIs('actors.index')" @click="open = false">
+                    <x-responsive-nav-link :href="route('admin.actors.index')" :active="request()->routeIs('admin.actors.index')" @click="open = false">
                         <div class="flex items-center">
                             <svg class="w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 20 20">
                                 <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"/>
@@ -210,7 +210,7 @@
                 </div>
 
                 <div class="mt-3 space-y-1">
-                    <x-responsive-nav-link :href="route('profile.edit')" @click="open = false">
+                    <x-responsive-nav-link :href="route('admin.profile.edit')" @click="open = false">
                         {{ __('Profile') }}
                     </x-responsive-nav-link>
 

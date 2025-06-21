@@ -53,12 +53,12 @@
                     <td class="py-2 px-4 dark:text-gray-200">{{ $film->duration }} mnt</td>
                     <td class="py-2 px-4 dark:text-gray-200">{{ $film->release_date }}</td>
                     <td class="py-2 px-4 flex gap-1">
-                        <a href="{{ route('films.edit', $film) }}" class="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded text-sm">Edit</a>
-                        <form action="{{ route('films.destroy', $film) }}" method="POST" onsubmit="return confirm('Yakin hapus film?')" class="inline">
+                        <a href="{{ route('admin.films.edit', $film) }}" class="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded text-sm">Edit</a>
+                        <form action="{{ route('admin.films.destroy', $film) }}" method="POST" onsubmit="return confirm('Yakin hapus film?')" class="inline">
                             @csrf @method('DELETE')
                             <button type="submit" class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm">Hapus</button>
                         </form>
-                        <a href="{{ route('films.show', $film) }}" class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm">Detail</a>
+                        <a href="{{ route('admin.films.show', $film) }}" class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm">Detail</a>
                     </td>
                 </tr>
             @endforeach

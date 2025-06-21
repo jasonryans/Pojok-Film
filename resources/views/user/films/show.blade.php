@@ -89,8 +89,10 @@
                     <!-- Review Form -->
                     @auth
                         <div class="mb-6">
-                            <form action="{{ route('review_post', $film->id) }}" method="POST">
+                            <form action="{{ route('reviews.store') }}" method="POST">
                                 @csrf
+                                <input type="hidden" name="film_id" value="{{ $film->id }}">
+
                                 <textarea 
                                     class="w-full p-3 border border-gray-300 rounded-lg resize-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" 
                                     rows="3" 

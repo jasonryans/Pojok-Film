@@ -5,7 +5,7 @@
         </h2>
     </x-slot>
 <div class="max-w-xl mx-auto py-8">
-    <form action="{{ route('actors.store') }}" method="POST" enctype="multipart/form-data" class="space-y-4">
+    <form action="{{ route('admin.actors.store') }}" method="POST" enctype="multipart/form-data" class="space-y-4">
         @csrf
         <div>
             <label class="block font-medium dark:text-gray-200">Nama</label>
@@ -32,7 +32,7 @@
             <input type="file" name="photo" class="file-input file-input-bordered w-full dark:text-gray-200">
         </div>
         <button type="submit" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded">Simpan</button>
-        <a href="{{ route('actors.index') }}" class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded ml-2">Kembali</a>
+        <a href="{{ route('admin.actors.index') }}" class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded ml-2">Kembali</a>
     </form>
 </div>
 </x-app-layout>
