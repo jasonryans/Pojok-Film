@@ -62,15 +62,27 @@
                     <div class="flex flex-wrap gap-3">
                         @foreach ($film->actors as $index => $actor)
                             <div class="bg-gray-100 rounded-lg p-3 text-center w-20 lg:w-24">
-                                <div class="w-14 h-14 lg:w-16 lg:h-16 bg-gray-300 rounded-full mx-auto mb-2"></div>
+                                <div class="w-14 h-14 lg:w-16 lg:h-16 bg-gray-300 rounded-full mx-auto mb-2 overflow-hidden">
+                                    @if($actor->photo)
+                                        <img src="{{ asset('storage/' . $actor->photo) }}" 
+                                             alt="{{ $actor->name }}" 
+                                             class="w-full h-full object-cover">
+                                    @else
+                                        <div class="w-full h-full bg-gray-300 flex items-center justify-center">
+                                            <svg class="w-6 h-6 text-gray-500" fill="currentColor" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
+                                            </svg>
+                                        </div>
+                                    @endif
+                                </div>
                                 <p class="text-sm font-medium text-gray-700">{{$actor->name}}</p>
                             </div>
                         @endforeach
-                        {{-- <button class="bg-gray-100 rounded-lg p-3 text-center w-20 lg:w-24 hover:bg-gray-200 transition-colors">
+                        <button class="bg-gray-100 rounded-lg p-3 text-center w-20 lg:w-24 hover:bg-gray-200 transition-colors">
                             <div class="w-14 h-14 lg:w-16 lg:h-16 bg-gray-300 rounded-full mx-auto mb-2 flex items-center justify-center">
                                 <span class="text-gray-600 text-xs">See more</span>
                             </div>
-                        </button> --}}
+                        </button>
                     </div>
                 </div>
 
