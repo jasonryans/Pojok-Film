@@ -114,6 +114,7 @@ class FilmController extends Controller
     {
         // Eager load relasi (genres, actors)
         $film->load(['genres', 'actors']);
+        $film->link_trailer = preg_replace('/.*(?:youtu\.be\/|v=|\/v\/|embed\/|watch\?v=|&v=)([^&\n?#]+)/', '$1', $film->link_trailer);
         return view('admin.films.show', compact('film')); 
     }
 }

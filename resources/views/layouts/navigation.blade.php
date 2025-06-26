@@ -65,6 +65,19 @@
                     </svg>
                     {{ __('List Aktor') }}
                 </x-nav-link>
+
+                <x-nav-link 
+                    :href="route('admin.admins.create')" 
+                    :active="request()->routeIs('admin.admins.create')"
+                    class="flex items-center w-full px-4 py-3 text-left rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200"
+                >
+                    <svg class="w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                        <circle cx="10" cy="10" r="9" fill="currentColor" opacity="0.2"/>
+                        <path d="M10 5a3 3 0 100 6 3 3 0 000-6zM10 12a5 5 0 00-5 5h10a5 5 0 00-5-5z"/>
+                        <path d="M16 2v6M13 5h6" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                    </svg>
+                    {{ __('Tambah Admin') }}
+                </x-nav-link>
             </div>
         </div>
 

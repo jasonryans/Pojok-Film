@@ -71,8 +71,8 @@
                                 value="{{ request('search') }}">
                         </div>
 
-                        <!-- Filter Controls -->
-                        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                                                <!-- Filter Controls -->
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                             <!-- Genre Filter -->
                             <select
                                 class="bg-white border border-gray-300 rounded-xl py-3 px-4 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300 shadow-md"
@@ -121,16 +121,6 @@
                                 <option value="genre" class="text-gray-800"
                                     {{ request('sort') == 'genre' ? 'selected' : '' }}>By Genre</option>
                             </select>
-
-                            <!-- Sort Order -->
-                            <select
-                                class="bg-white border border-gray-300 rounded-xl py-3 px-4 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300 shadow-md"
-                                name="order">
-                                <option value="asc" class="text-gray-800"
-                                    {{ request('order') == 'asc' ? 'selected' : '' }}>A-Z</option>
-                                <option value="desc" class="text-gray-800"
-                                    {{ request('order') == 'desc' ? 'selected' : '' }}>Z-A</option>
-                            </select>
                         </div>
 
                         <!-- Action Buttons -->
@@ -139,7 +129,7 @@
                                 class="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-dark px-8 py-3 rounded-xl font-semibold transform hover:scale-105 transition-all duration-300 shadow-lg">
                                 <i class="fas fa-search mr-2"></i>Search
                             </button>
-                            @if (request('search') || request('genre') || request('year') || request('sort') || request('order'))
+                            @if (request('search') || request('genre') || request('year') || request('sort'))
                                 <a href="{{ route('films.index') }}"
                                     class="bg-gray-600 hover:bg-gray-700 text-white px-8 py-3 rounded-xl font-semibold transform hover:scale-105 transition-all duration-300 shadow-lg">
                                     <i class="fas fa-times mr-2"></i>Clear

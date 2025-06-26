@@ -5,7 +5,7 @@ use App\Http\Controllers\Admin\FilmController;
 use App\Http\Controllers\Admin\ReviewController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\ActorController;
-
+use App\Http\Controllers\Admin\AdminController;
 
 Route::name('admin.')
 ->middleware(['auth', 'admin'])
@@ -16,6 +16,7 @@ Route::name('admin.')
 
     Route::resource('/films', FilmController::class);
     Route::resource('/actors', ActorController::class);
+    Route::resource('/admins', AdminController::class);
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
