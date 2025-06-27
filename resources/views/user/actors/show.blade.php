@@ -48,18 +48,18 @@
                         <span class="font-semibold text-blue-200">Gender:</span>
                         <div class="flex items-center gap-2">
                             @if($actor->gender == 0)
-                                <span class="px-4 py-2 bg-blue-500/20 rounded-full backdrop-blur-sm flex items-center gap-2">
-                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                                        <path d="M10 2L13 5H11V8H9V5H7L10 2ZM10 18L7 15H9V12H11V15H13L10 18Z"/>
-                                    </svg>
-                                    Male
-                                </span>
-                            @else
                                 <span class="px-4 py-2 bg-pink-500/20 rounded-full backdrop-blur-sm flex items-center gap-2">
                                     <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                                         <path d="M12 2C13.1 2 14 2.9 14 4C14 5.1 13.1 6 12 6C10.9 6 10 5.1 10 4C10 2.9 10.9 2 12 2ZM21 9V7L12 2L3 7V9H5V20H19V9H21Z"/>
                                     </svg>
                                     Female
+                                </span>
+                            @else
+                                <span class="px-4 py-2 bg-blue-500/20 rounded-full backdrop-blur-sm flex items-center gap-2">
+                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M10 2L13 5H11V8H9V5H7L10 2ZM10 18L7 15H9V12H11V15H13L10 18Z"/>
+                                    </svg>
+                                    Male
                                 </span>
                             @endif
                         </div>

@@ -279,15 +279,9 @@
                                 <!-- Action Buttons -->
                                 <div class="flex space-x-2">
                                     <a href="{{ route('films.show', $movie->id) }}"
-                                        class="flex-1 bg-gradient-to-r from-blue-400 to-blue-500 hover:from-purple-600 hover:to-purple-700 text-white text-center py-2 px-3 rounded-lg font-medium transition-all duration-300 transform hover:scale-105 text-sm">
+                                        class="flex-1 bg-gradient-to-r from-blue-400 to-blue-500 hover:from-purple-600 hover:to-purple-700 text-dark-700 text-center py-2 px-3 rounded-lg font-medium transition-all duration-300 transform hover:scale-105 text-sm">
                                         <i class="fas fa-eye mr-1"></i>Details
                                     </a>
-                                    @if ($movie->link_trailer)
-                                        <a href="{{ $movie->link_trailer }}" target="_blank"
-                                            class="bg-red-600 hover:bg-red-700 text-white py-2 px-3 rounded-lg font-medium transition-all duration-300 transform hover:scale-105 text-sm">
-                                            <i class="fab fa-youtube"></i>
-                                        </a>
-                                    @endif
                                 </div>
                             </div>
                         </div>
