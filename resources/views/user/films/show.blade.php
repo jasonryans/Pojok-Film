@@ -42,6 +42,10 @@
                             <span class="px-4 py-2 bg-white/20 rounded-full backdrop-blur-sm">{{ $genre->name }}</span>
                         @endforeach
                     </div>
+
+                    <div class="flex flex-wrap items-center gap-3">
+                        <span class="font-semibold text-blue-200">Duration : {{$film->duration}} minutes</span>
+                    </div>
                     
                     <div class="flex items-center gap-4">
                         <span class="font-semibold text-blue-200">Rating:</span>
