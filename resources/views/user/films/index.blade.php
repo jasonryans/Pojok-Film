@@ -330,7 +330,7 @@
                                     <!-- Movie Poster Container -->
                                     <div class="relative bg-gradient-to-br from-gray-200 to-gray-300 overflow-hidden aspect-[2/3]">
                                         @if ($movie->poster)
-                                            <img src="{{ asset('storage/' . $movie->poster) }}"
+                                            <img src="{{ $movie->posterUrl() }}"
                                                 alt="{{ $movie->name }} Poster"
                                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                                         @else

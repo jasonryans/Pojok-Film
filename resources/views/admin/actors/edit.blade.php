@@ -31,7 +31,7 @@
             <input type="file" name="photo" class="file-input file-input-bordered w-full dark:text-gray-200">
             @if($actor->photo)
                 <div class="mt-2">
-                    <img src="{{ asset('storage/' . $actor->photo) }}" alt="Foto" class="w-20 h-20 rounded-full object-cover">
+                    <img src="{{ $actor->photoUrl() }}" alt="Foto" class="w-20 h-20 rounded-full object-cover">
                 </div>
             @endif
         </div>

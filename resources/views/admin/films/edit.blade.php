@@ -60,7 +60,7 @@
                 <input type="file" name="poster" class="w-full dark:text-gray-200">
                 @if($film->poster)
                     <div class="mt-2">
-                        <img src="{{ asset('storage/' . $film->poster) }}" alt="Poster" class="w-24 rounded shadow">
+                        <img src="{{ $film->posterUrl() }}" alt="Poster" class="w-24 rounded shadow">
                     </div>
                 @endif
             </div>

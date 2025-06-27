@@ -2,7 +2,7 @@
     <div class="max-w-2xl mx-auto py-8">
         <div class="flex items-start gap-6">
             @if ($film->poster)
-                <img src="{{ asset('storage/' . $film->poster) }}" class="w-32 h-44 object-cover rounded shadow"
+                <img src="{{ $film->posterUrl() }}" class="w-32 h-44 object-cover rounded shadow"
                     alt="{{ $film->name }}">
             @endif
             <div>
@@ -35,7 +35,7 @@
                 @foreach ($film->actors->take(4) as $actor)
                     <div class="flex flex-col items-center">
                         @if ($actor->photo)
-                            <img src="{{ asset('storage/' . $actor->photo) }}"
+                            <img src="{{ $actor->photoUrl() }}"
                                 class="w-10 h-10 rounded-full object-cover mb-1" alt="{{ $actor->name }}">
                         @endif
                         <span class="text-xs text-center dark:text-gray-500 mt-2">{{ $actor->name }}</span>

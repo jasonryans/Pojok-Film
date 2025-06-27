@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\Storage;
 
 class Film extends Model
 {
@@ -39,5 +40,19 @@ class Film extends Model
     public function reviews()
     {
         return $this->hasMany(Review::class);
+    }
+
+    public function posterUrl()
+    {
+        if (!$this->poster) {
+            return null;
+        }
+
+        // Return the poster URL if it is an absolute URL
+        if (str_starts_with($this->poster, 'http')) {
+            return $this->poster;
+        }
+        // Otherwise, return the URL from storage
+        return Storage::url($this->poster);
     }
 }

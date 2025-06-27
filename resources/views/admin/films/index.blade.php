@@ -37,7 +37,7 @@
                 <tr class="border-b hover:bg-gray-50 dark:border-gray-600 dark:hover:bg-gray-700">
                     <td class="py-2 px-4">
                         @if($film->poster)
-                            <img src="{{ asset('storage/' . $film->poster) }}" alt="Poster" class="w-16 rounded shadow">
+                            <img src="{{ $film->posterUrl() }}" alt="Poster" class="w-16 rounded shadow">
                         @else
                             <span class="italic text-gray-400 dark:text-gray-500">No Image</span>
                         @endif
