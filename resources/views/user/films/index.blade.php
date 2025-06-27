@@ -1,3 +1,4 @@
+
 @extends('user.base')
 @section('user.content')
 
@@ -71,7 +72,7 @@
                                 value="{{ request('search') }}">
                         </div>
 
-                                                <!-- Filter Controls -->
+                        <!-- Filter Controls -->
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                             <!-- Genre Filter -->
                             <select
@@ -126,7 +127,7 @@
                         <!-- Action Buttons -->
                         <div class="flex justify-center space-x-4">
                             <button type="submit"
-                                class="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-dark px-8 py-3 rounded-xl font-semibold transform hover:scale-105 transition-all duration-300 shadow-lg">
+                                class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-xl font-semibold transform hover:scale-105 transition-all duration-300 shadow-lg">
                                 <i class="fas fa-search mr-2"></i>Search
                             </button>
                             @if (request('search') || request('genre') || request('year') || request('sort'))
@@ -186,127 +187,104 @@
         <div class="container mx-auto px-4 pb-16">
             <!-- All View -->
             <div id="all-view" class="view">
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
                     @forelse ($film as $movie)
-                        <div
-                            class="group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transform hover:-translate-y-2 transition-all duration-500 border border-gray-200">
-                            <!-- Movie Poster -->
-                            <div class="relative bg-gradient-to-br from-gray-200 to-gray-300 overflow-hidden flex items-center justify-center min-h-80">
+                        <div class="group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transform hover:-translate-y-2 transition-all duration-500 border border-gray-200">
+                            <!-- Movie Poster Container -->
+                            <div class="relative bg-gradient-to-br from-gray-200 to-gray-300 overflow-hidden aspect-[2/3]">
                                 @if ($movie->poster)
                                     <img src="{{ Str::startsWith($movie->poster, 'http') ? $movie->poster : asset('storage/' . $movie->poster) }}"
                                         alt="{{ $movie->name }} Poster"
-                                        class="w-full h-auto max-h-96 object-contain group-hover:scale-105 transition-transform duration-500">
+                                        class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                                 @else
-                                    <div class="flex items-center justify-center h-80">
-                                        <i class="fas fa-film text-6xl text-yellow-600"></i>
+                                    <div class="flex items-center justify-center h-full">
+                                        <i class="fas fa-film text-4xl text-yellow-600"></i>
                                     </div>
                                 @endif
 
-                                <!-- Genre Badge -->
-                                <div class="absolute top-4 left-4">
-                                    @if ($movie->genres && $movie->genres->count() > 0)
-                                        <div class="flex flex-wrap gap-1 max-w-40">
-                                            @foreach ($movie->genres as $genre)
-                                                <span
-                                                    class="px-2 py-1 text-xs font-bold text-white rounded-full {{ getGenreColor($genre->name, $genreColors) }} shadow-lg">
-                                                    {{ $genre->name }}
-                                                </span>
-                                            @endforeach
-                                        </div>
-                                    @elseif ($movie->genre_names)
-                                        <div class="flex flex-wrap gap-1 max-w-40">
-                                            @foreach (explode(', ', $movie->genre_names) as $genreName)
-                                                <span
-                                                    class="px-2 py-1 text-xs font-bold text-white rounded-full {{ getGenreColor(trim($genreName), $genreColors) }} shadow-lg">
-                                                    {{ trim($genreName) }}
-                                                </span>
-                                            @endforeach
-                                        </div>
-                                    @else
-                                        <span
-                                            class="px-3 py-1 text-xs font-bold text-white rounded-full {{ getGenreColor($movie->primary_genre, $genreColors) }} shadow-lg">
-                                            {{ $movie->primary_genre }}
+                                <!-- Duration Badge (Top Left) -->
+                                @if ($movie->duration)
+                                    <div class="absolute top-2 left-2">
+                                        <span class="bg-black/70 text-white px-2 py-1 rounded-lg text-xs font-medium flex items-center backdrop-blur-sm">
+                                            <i class="far fa-clock mr-1"></i>{{ $movie->duration }}m
                                         </span>
-                                    @endif
-                                </div>
+                                    </div>
+                                @endif
 
-                                <!-- Rating Badge -->
+                                <!-- Rating Badge (Top Right) -->
                                 @if ($movie->rating)
-                                    <div class="absolute top-4 right-4">
-                                        <span
-                                            class="bg-yellow-500 text-black px-2 py-1 rounded-full text-xs font-bold flex items-center shadow-lg">
-                                            <i class="fas fa-star mr-1"></i>{{ $movie->rating }}/10
+                                    <div class="absolute top-2 right-2">
+                                        <span class="bg-yellow-500 text-black px-2 py-1 rounded-lg text-xs font-bold flex items-center">
+                                            <i class="fas fa-star mr-1"></i>{{ $movie->rating }}
                                         </span>
                                     </div>
                                 @endif
                             </div>
 
                             <!-- Movie Info -->
-                            <div class="p-6">
-                                <h3
-                                    class="text-xl font-bold text-gray-800 mb-3 line-clamp-2 group-hover:text-blue-600 transition-colors duration-300">
+                            <div class="p-4">
+                                <h3 class="text-base font-bold text-gray-800 mb-2 line-clamp-2 group-hover:text-blue-600 transition-colors duration-300 leading-tight">
                                     {{ $movie->name }}
                                 </h3>
 
-                                <!-- Movie Meta -->
-                                <div class="flex items-center justify-between text-sm text-gray-600 mb-4">
-                                    <span class="flex items-center">
-                                        <i class="far fa-calendar-alt mr-2 text-blue-500"></i>
-                                        {{ \Carbon\Carbon::parse($movie->release_date)->format('Y') }}
-                                    </span>
-                                    @if ($movie->duration)
-                                        <span class="flex items-center">
-                                            <i class="far fa-clock mr-2 text-green-500"></i>
-                                            {{ $movie->duration }} min
-                                        </span>
-                                    @endif
+                                <!-- Release Year -->
+                                <div class="flex items-center text-sm text-gray-600 mb-3">
+                                    <i class="far fa-calendar-alt mr-2 text-blue-500"></i>
+                                    {{ \Carbon\Carbon::parse($movie->release_date)->format('Y') }}
                                 </div>
 
                                 <!-- Description -->
                                 @if ($movie->description)
-                                    <p class="text-gray-600 text-sm mb-4 line-clamp-3">
-                                        {{ Str::limit($movie->description, 120, '...') }}
+                                    <p class="text-gray-600 text-xs mb-4 line-clamp-3 leading-relaxed">
+                                        {{ Str::limit($movie->description, 80, '...') }}
                                     </p>
                                 @endif
 
-                                <!-- Genres -->
+                                <!-- Genres (Bottom of card, before buttons) -->
                                 @if ($movie->genres && $movie->genres->count() > 0)
                                     <div class="mb-4">
-                                        <p class="text-xs text-gray-500 mb-2">
-                                            <span class="font-semibold">Genres:</span>
-                                        </p>
                                         <div class="flex flex-wrap gap-1">
-                                            @foreach ($movie->genres as $genre)
-                                                <span class="px-2 py-1 text-xs font-medium text-white rounded-full {{ getGenreColor($genre->name, $genreColors) }} shadow-sm">
+                                            @foreach ($movie->genres->take(2) as $genre)
+                                                <span class="px-2 py-1 text-xs font-medium text-white rounded-full {{ getGenreColor($genre->name, $genreColors) }}">
                                                     {{ $genre->name }}
                                                 </span>
                                             @endforeach
+                                            @if ($movie->genres->count() > 2)
+                                                <span class="px-2 py-1 text-xs font-medium text-gray-600 bg-gray-200 rounded-full">
+                                                    +{{ $movie->genres->count() - 2 }}
+                                                </span>
+                                            @endif
                                         </div>
                                     </div>
                                 @elseif ($movie->genre_names)
+                                    @php
+                                        $genreArray = array_map('trim', explode(', ', $movie->genre_names));
+                                    @endphp
                                     <div class="mb-4">
-                                        <p class="text-xs text-gray-500 mb-2">
-                                            <span class="font-semibold">Genres:</span>
-                                        </p>
                                         <div class="flex flex-wrap gap-1">
-                                            @foreach (explode(', ', $movie->genre_names) as $genreName)
-                                                <span class="px-2 py-1 text-xs font-medium text-white rounded-full {{ getGenreColor(trim($genreName), $genreColors) }} shadow-sm">
-                                                    {{ trim($genreName) }}
+                                            @foreach (array_slice($genreArray, 0, 2) as $genreName)
+                                                <span class="px-2 py-1 text-xs font-medium text-white rounded-full {{ getGenreColor($genreName, $genreColors) }}">
+                                                    {{ $genreName }}
                                                 </span>
                                             @endforeach
+                                            @if (count($genreArray) > 2)
+                                                <span class="px-2 py-1 text-xs font-medium text-gray-600 bg-gray-200 rounded-full">
+                                                    +{{ count($genreArray) - 2 }}
+                                                </span>
+                                            @endif
                                         </div>
                                     </div>
                                 @endif
 
                                 <!-- Action Buttons -->
-                                <div class="flex space-x-3">
+                                <div class="flex space-x-2">
                                     <a href="{{ route('films.show', $movie->id) }}"
-                                        class="flex-1 bg-gradient-to-r from-blue-400 to-blue-500 hover:from-purple-600 hover:to-purple-700 text-dark text-center py-2 px-4 rounded-lg font-medium transition-all duration-300 transform hover:scale-105">
-                                        <i class="fas fa-eye mr-2"></i>Details
+                                        class="flex-1 bg-gradient-to-r from-blue-400 to-blue-500 hover:from-purple-600 hover:to-purple-700 text-white text-center py-2 px-3 rounded-lg font-medium transition-all duration-300 transform hover:scale-105 text-sm">
+                                        <i class="fas fa-eye mr-1"></i>Details
                                     </a>
                                     @if ($movie->link_trailer)
                                         <a href="{{ $movie->link_trailer }}" target="_blank"
-                                            class="bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-lg font-medium transition-all duration-300 transform hover:scale-105">
+                                            class="bg-red-600 hover:bg-red-700 text-white py-2 px-3 rounded-lg font-medium transition-all duration-300 transform hover:scale-105 text-sm">
                                             <i class="fab fa-youtube"></i>
                                         </a>
                                     @endif
@@ -344,8 +322,7 @@
                         <!-- Genre Header -->
                         <div class="mb-8">
                             <h2 class="text-3xl font-bold text-gray-800 flex items-center">
-                                <span
-                                    class="px-4 py-2 rounded-xl text-white mr-4 {{ getGenreColor($genre, $genreColors) }}">
+                                <span class="px-4 py-2 rounded-xl text-white mr-4 {{ getGenreColor($genre, $genreColors) }}">
                                     {{ $genre }}
                                 </span>
                                 <span class="text-gray-600 text-lg">({{ $movies->count() }} movies)</span>
@@ -353,127 +330,104 @@
                         </div>
 
                         <!-- Movies Grid -->
-                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
                             @foreach ($movies as $movie)
-                                <div
-                                    class="group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transform hover:-translate-y-2 transition-all duration-500 border border-gray-200">
-                                    <!-- Movie Poster -->
-                                    <div class="relative bg-gradient-to-br from-gray-200 to-gray-300 overflow-hidden flex items-center justify-center min-h-80">
+                                <div class="group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transform hover:-translate-y-2 transition-all duration-500 border border-gray-200">
+                                    <!-- Movie Poster Container -->
+                                    <div class="relative bg-gradient-to-br from-gray-200 to-gray-300 overflow-hidden aspect-[2/3]">
                                         @if ($movie->poster)
                                             <img src="{{ asset('storage/' . $movie->poster) }}"
                                                 alt="{{ $movie->name }} Poster"
-                                                class="w-full h-auto max-h-96 object-contain group-hover:scale-105 transition-transform duration-500">
+                                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                                         @else
-                                            <div class="flex items-center justify-center h-80">
-                                                <i class="fas fa-film text-6xl text-yellow-600"></i>
+                                            <div class="flex items-center justify-center h-full">
+                                                <i class="fas fa-film text-4xl text-yellow-600"></i>
                                             </div>
                                         @endif
 
-                                        <!-- Genre Badge -->
-                                        <div class="absolute top-4 left-4">
-                                            @if ($movie->genres && $movie->genres->count() > 0)
-                                                <div class="flex flex-wrap gap-1 max-w-40">
-                                                    @foreach ($movie->genres as $genre)
-                                                        <span
-                                                            class="px-2 py-1 text-xs font-bold text-white rounded-full {{ getGenreColor($genre->name, $genreColors) }} shadow-lg">
-                                                            {{ $genre->name }}
-                                                        </span>
-                                                    @endforeach
-                                                </div>
-                                            @elseif ($movie->genre_names)
-                                                <div class="flex flex-wrap gap-1 max-w-40">
-                                                    @foreach (explode(', ', $movie->genre_names) as $genreName)
-                                                        <span
-                                                            class="px-2 py-1 text-xs font-bold text-white rounded-full {{ getGenreColor(trim($genreName), $genreColors) }} shadow-lg">
-                                                            {{ trim($genreName) }}
-                                                        </span>
-                                                    @endforeach
-                                                </div>
-                                            @else
-                                                <span
-                                                    class="px-2 py-1 text-xs font-bold text-white rounded-full {{ getGenreColor($movie->primary_genre, $genreColors) }} shadow-lg">
-                                                    {{ $movie->primary_genre }}
+                                        <!-- Duration Badge (Top Left) -->
+                                        @if ($movie->duration)
+                                            <div class="absolute top-2 left-2">
+                                                <span class="bg-black/70 text-white px-2 py-1 rounded-lg text-xs font-medium flex items-center backdrop-blur-sm">
+                                                    <i class="far fa-clock mr-1"></i>{{ $movie->duration }}m
                                                 </span>
-                                            @endif
-                                        </div>
+                                            </div>
+                                        @endif
 
-                                        <!-- Rating Badge -->
+                                        <!-- Rating Badge (Top Right) -->
                                         @if ($movie->rating)
-                                            <div class="absolute top-4 right-4">
-                                                <span
-                                                    class="bg-yellow-500 text-black px-2 py-1 rounded-full text-xs font-bold flex items-center shadow-lg">
-                                                    <i class="fas fa-star mr-1"></i>{{ $movie->rating }}/10
+                                            <div class="absolute top-2 right-2">
+                                                <span class="bg-yellow-500 text-black px-2 py-1 rounded-lg text-xs font-bold flex items-center">
+                                                    <i class="fas fa-star mr-1"></i>{{ $movie->rating }}
                                                 </span>
                                             </div>
                                         @endif
                                     </div>
 
                                     <!-- Movie Info -->
-                                    <div class="p-6">
-                                        <h3
-                                            class="text-xl font-bold text-gray-800 mb-3 line-clamp-2 group-hover:text-blue-600 transition-colors duration-300">
+                                    <div class="p-4">
+                                        <h3 class="text-base font-bold text-gray-800 mb-2 line-clamp-2 group-hover:text-blue-600 transition-colors duration-300 leading-tight">
                                             {{ $movie->name }}
                                         </h3>
 
-                                        <!-- Movie Meta -->
-                                        <div class="flex items-center justify-between text-sm text-gray-600 mb-4">
-                                            <span class="flex items-center">
-                                                <i class="far fa-calendar-alt mr-2 text-blue-500"></i>
-                                                {{ \Carbon\Carbon::parse($movie->release_date)->format('Y') }}
-                                            </span>
-                                            @if ($movie->duration)
-                                                <span class="flex items-center">
-                                                    <i class="far fa-clock mr-2 text-green-500"></i>
-                                                    {{ $movie->duration }} min
-                                                </span>
-                                            @endif
+                                        <!-- Release Year -->
+                                        <div class="flex items-center text-sm text-gray-600 mb-3">
+                                            <i class="far fa-calendar-alt mr-2 text-blue-500"></i>
+                                            {{ \Carbon\Carbon::parse($movie->release_date)->format('Y') }}
                                         </div>
 
                                         <!-- Description -->
                                         @if ($movie->description)
-                                            <p class="text-gray-600 text-sm mb-4 line-clamp-3">
-                                                {{ Str::limit($movie->description, 120, '...') }}
+                                            <p class="text-gray-600 text-xs mb-4 line-clamp-3 leading-relaxed">
+                                                {{ Str::limit($movie->description, 80, '...') }}
                                             </p>
                                         @endif
 
-                                        <!-- Genres -->
+                                        <!-- Genres (Bottom of card, before buttons) -->
                                         @if ($movie->genres && $movie->genres->count() > 0)
                                             <div class="mb-4">
-                                                <p class="text-xs text-gray-500 mb-2">
-                                                    <span class="font-semibold">Genres:</span>
-                                                </p>
                                                 <div class="flex flex-wrap gap-1">
-                                                    @foreach ($movie->genres as $genre)
-                                                        <span class="px-2 py-1 text-xs font-medium text-white rounded-full {{ getGenreColor($genre->name, $genreColors) }} shadow-sm">
+                                                    @foreach ($movie->genres->take(2) as $genre)
+                                                        <span class="px-2 py-1 text-xs font-medium text-white rounded-full {{ getGenreColor($genre->name, $genreColors) }}">
                                                             {{ $genre->name }}
                                                         </span>
                                                     @endforeach
+                                                    @if ($movie->genres->count() > 2)
+                                                        <span class="px-2 py-1 text-xs font-medium text-gray-600 bg-gray-200 rounded-full">
+                                                            +{{ $movie->genres->count() - 2 }}
+                                                        </span>
+                                                    @endif
                                                 </div>
                                             </div>
                                         @elseif ($movie->genre_names)
+                                            @php
+                                                $genreArray = array_map('trim', explode(', ', $movie->genre_names));
+                                            @endphp
                                             <div class="mb-4">
-                                                <p class="text-xs text-gray-500 mb-2">
-                                                    <span class="font-semibold">Genres:</span>
-                                                </p>
                                                 <div class="flex flex-wrap gap-1">
-                                                    @foreach (explode(', ', $movie->genre_names) as $genreName)
-                                                        <span class="px-2 py-1 text-xs font-medium text-white rounded-full {{ getGenreColor(trim($genreName), $genreColors) }} shadow-sm">
-                                                            {{ trim($genreName) }}
+                                                    @foreach (array_slice($genreArray, 0, 2) as $genreName)
+                                                        <span class="px-2 py-1 text-xs font-medium text-white rounded-full {{ getGenreColor($genreName, $genreColors) }}">
+                                                            {{ $genreName }}
                                                         </span>
                                                     @endforeach
+                                                    @if (count($genreArray) > 2)
+                                                        <span class="px-2 py-1 text-xs font-medium text-gray-600 bg-gray-200 rounded-full">
+                                                            +{{ count($genreArray) - 2 }}
+                                                        </span>
+                                                    @endif
                                                 </div>
                                             </div>
                                         @endif
 
                                         <!-- Action Buttons -->
-                                        <div class="flex space-x-3">
+                                        <div class="flex space-x-2">
                                             <a href="{{ route('films.show', $movie->id) }}"
-                                                class="flex-1 bg-gradient-to-r from-blue-400 to-blue-500 hover:from-purple-600 hover:to-purple-700 text-dark text-center py-2 px-4 rounded-lg font-medium transition-all duration-300 transform hover:scale-105">
-                                                <i class="fas fa-eye mr-2"></i>Details
+                                                class="flex-1 bg-gradient-to-r from-blue-400 to-blue-500 hover:from-purple-600 hover:to-purple-700 text-white text-center py-2 px-3 rounded-lg font-medium transition-all duration-300 transform hover:scale-105 text-sm">
+                                                <i class="fas fa-eye mr-1"></i>Details
                                             </a>
                                             @if ($movie->link_trailer)
                                                 <a href="{{ $movie->link_trailer }}" target="_blank"
-                                                    class="bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-lg font-medium transition-all duration-300 transform hover:scale-105">
+                                                    class="bg-red-600 hover:bg-red-700 text-white py-2 px-3 rounded-lg font-medium transition-all duration-300 transform hover:scale-105 text-sm">
                                                     <i class="fab fa-youtube"></i>
                                                 </a>
                                             @endif
