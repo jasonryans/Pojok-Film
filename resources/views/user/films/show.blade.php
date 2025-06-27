@@ -197,60 +197,135 @@
 
         <!-- Review Form -->
         @auth
-            <div class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl p-8 mb-8 border border-blue-200">
-                <h4 class="text-2xl font-bold text-gray-900 mb-6">Share Your Thoughts</h4>
-                <form action="{{ route('reviews.store') }}" method="POST" class="space-y-6">
-                    @csrf
-                    <input type="hidden" name="film_id" value="{{ $film->id }}">
+            @if ($userReview)
+                {{-- Kondisi 2: Sudah login dan sudah review - tampilkan review yang bisa diedit --}}
+                <div class="bg-green-50 border border-green-200 rounded-2xl p-8 mb-8">
+                    <h4 class="text-2xl font-bold text-gray-900 mb-4">Your Review</h4>
                     
-                    <textarea 
-                        name="review"
-                        rows="5" 
-                        class="w-full p-4 border-2 border-blue-200 focus:border-blue-400 rounded-xl resize-none text-lg"
-                        placeholder="Write your review here... What did you think about the movie?"
-                        required></textarea>
-                    
-                    <div class="flex flex-col sm:flex-row gap-6 items-start sm:items-end">
-                        <div class="space-y-2">
-                            <label class="text-lg font-medium text-gray-700">Your Rating</label>
-                            <div class="flex items-center gap-3">
-                                <input
-                                    type="number"
-                                    name="rating"
-                                    placeholder="8.5"
-                                    min="1"
-                                    max="10"
-                                    step="0.1"
-                                    class="w-20 text-center text-lg font-semibold border-2 border-blue-200 focus:border-blue-400 rounded-lg p-2"
-                                    required
-                                />
-                                <span class="text-lg text-gray-600 font-medium">/10</span>
-                                <svg class="w-6 h-6 text-yellow-500 fill-current" viewBox="0 0 20 20">
-                                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-                                </svg>
+                    {{-- Form untuk edit review menggunakan method PUT --}}
+                    <form action="{{ route('reviews.update', ['id' => $userReview->id]) }}" method="POST" class="space-y-6">
+                        @csrf
+                        @method('PUT')
+                        <input type="hidden" name="film_id" value="{{ $film->id }}">
+                        
+                        <textarea 
+                            name="review"
+                            rows="5" 
+                            class="w-full p-4 border-2 border-green-200 focus:border-green-400 rounded-xl resize-none text-lg"
+                            placeholder="Edit your review here..."
+                            required>{{ old('review', $userReview->review) }}</textarea>
+                        
+                        <div class="flex flex-col sm:flex-row gap-6 items-start sm:items-end justify-between">
+                            <div class="space-y-2">
+                                <label class="text-lg font-medium text-gray-700">Your Rating</label>
+                                <div class="flex items-center gap-3">
+                                    <input
+                                        type="number"
+                                        name="rating"
+                                        min="1"
+                                        max="10"
+                                        step="0.1"
+                                        class="w-20 text-center text-lg font-semibold border-2 border-green-200 focus:border-green-400 rounded-lg p-2"
+                                        value="{{ old('rating', $userReview->rating) }}"
+                                        required
+                                    />
+                                    <span class="text-lg text-gray-600 font-medium">/10</span>
+                                </div>
+                            </div>
+                            
+                            <div class="flex gap-2">
+                                <button 
+                                    type="submit"
+                                    class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-xl text-lg font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300">
+                                    <svg class="w-5 h-5 mr-2 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                    </svg>
+                                    Update Review
+                                </button>
+                                
+                                {{-- Tombol delete dengan method DELETE --}}
+                                <button 
+                                    type="button"
+                                    onclick="confirmDelete()"
+                                    class="bg-red-600 hover:bg-red-700 text-white px-4 py-3 rounded-xl text-lg font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300">
+                                    Delete
+                                </button>
                             </div>
                         </div>
+                    </form>
+                    
+                    {{-- Form terpisah untuk delete --}}
+                    <form id="delete-form" action="{{ route('reviews.destroy',  ['id' => $userReview->id]) }}" method="POST" style="display: none;">
+                        @csrf
+                        @method('DELETE')
+                    </form>
+                </div>
+            @else
+                {{-- Kondisi 1: Sudah login tapi belum review - tampilkan form review --}}
+                <div class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl p-8 mb-8 border border-blue-200">
+                    <h4 class="text-2xl font-bold text-gray-900 mb-6">Share Your Thoughts</h4>
+                    <form action="{{ route('reviews.store') }}" method="POST" class="space-y-6">
+                        @csrf
+                        <input type="hidden" name="film_id" value="{{ $film->id }}">
                         
-                        <button 
-                            type="submit"
-                            class="bg-blue-600 hover:from-blue-700 hover:to-indigo-700 text-white px-8 py-3 rounded-xl text-lg font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300">
-                            <svg class="w-5 h-5 mr-2 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
-                            </svg>
-                            Submit Review
-                        </button>
-                    </div>
-                </form>
-            </div>
+                        <textarea 
+                            name="review"
+                            rows="5" 
+                            class="w-full p-4 border-2 border-blue-200 focus:border-blue-400 rounded-xl resize-none text-lg"
+                            placeholder="Write your review here... What did you think about the movie?"
+                            required>{{ old('review') }}</textarea>
+                        
+                        <div class="flex flex-col sm:flex-row gap-6 items-start sm:items-end">
+                            <div class="space-y-2">
+                                <label class="text-lg font-medium text-gray-700">Your Rating</label>
+                                <div class="flex items-center gap-3">
+                                    <input
+                                        type="number"
+                                        name="rating"
+                                        placeholder="8.5"
+                                        min="1"
+                                        max="10"
+                                        step="0.1"
+                                        class="w-20 text-center text-lg font-semibold border-2 border-blue-200 focus:border-blue-400 rounded-lg p-2"
+                                        value="{{ old('rating') }}"
+                                        required
+                                    />
+                                    <span class="text-lg text-gray-600 font-medium">/10</span>
+                                </div>
+                            </div>
+                            
+                            <button 
+                                type="submit"
+                                class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-xl text-lg font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300">
+                                <svg class="w-5 h-5 mr-2 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
+                                </svg>
+                                Submit Review
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            @endif
         @else
+            {{-- Kondisi 3: Belum login - tampilkan pesan harus login dulu --}}
             <div class="bg-gradient-to-r from-amber-50 to-orange-50 rounded-2xl p-8 mb-8 border border-amber-200 text-center">
-                <p class="text-xl text-gray-700 mb-4">Want to share your thoughts?</p>
+                <div class="mb-4">
+                    <svg class="w-16 h-16 mx-auto text-amber-500 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                    </svg>
+                </div>
+                <h4 class="text-2xl font-bold text-gray-900 mb-4">Login Required</h4>
+                <p class="text-xl text-gray-700 mb-6">You need to login first to write a review for this movie</p>
                 <a href="{{ route('login', ['redirect' => url()->current()]) }}" 
-                   class="inline-block bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded-xl text-lg font-semibold transition-all duration-300 transform hover:scale-105">
+                class="inline-block bg-orange-500 hover:bg-orange-600 text-white px-8 py-4 rounded-xl text-lg font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+                    <svg class="w-5 h-5 mr-2 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"></path>
+                    </svg>
                     Log In to Review
                 </a>
             </div>
         @endauth
+
 
         <!-- Reviews List -->
         <div class="space-y-6">
@@ -293,6 +368,25 @@
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     }
 </style>
+
+<script>
+    function confirmDelete() {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#e3342f',
+            cancelButtonColor: '#6c757d',
+            confirmButtonText: 'Yes, delete it!',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById('delete-form').submit();
+            }
+        });
+    }
+</script>
 
 <!-- SweetAlert2 for notifications -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

@@ -146,7 +146,7 @@
                         <div class="bg-blue-100 border border-blue-300 rounded-xl p-4 shadow-md">
                             <div class="flex items-center text-blue-800">
                                 <i class="fas fa-info-circle mr-3 text-lg"></i>
-                                <span>Showing results for:</span>
+                                <span>Showing results for: </span>
                                 @if (request('search'))
                                     <span class="font-bold ml-1">"{{ request('search') }}"</span>
                                 @endif
@@ -154,7 +154,7 @@
                                     @if (request('search'))
                                         <span class="ml-1">in</span>
                                     @endif
-                                    <span class="font-bold ml-1">{{ request('genre') }}</span> genre
+                                    <span class="font-bold ml-1">{{ request('genre') }} genre</span> 
                                 @endif
                                 @if (request('year'))
                                     @if (request('search') || request('genre'))
@@ -330,9 +330,9 @@
                                     <!-- Movie Poster Container -->
                                     <div class="relative bg-gradient-to-br from-gray-200 to-gray-300 overflow-hidden aspect-[2/3]">
                                         @if ($movie->poster)
-                                            <img src="{{ $movie->posterUrl() }}"
-                                                alt="{{ $movie->name }} Poster"
-                                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                                        <img src="{{ Str::startsWith($movie->poster, 'http') ? $movie->poster : asset('storage/' . $movie->poster) }}"
+                                            alt="{{ $movie->name }} Poster"
+                                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                                         @else
                                             <div class="flex items-center justify-center h-full">
                                                 <i class="fas fa-film text-4xl text-yellow-600"></i>

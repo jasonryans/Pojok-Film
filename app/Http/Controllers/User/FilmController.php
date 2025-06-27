@@ -7,6 +7,7 @@ use App\Models\Genre;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class FilmController extends Controller
 {
@@ -15,11 +16,20 @@ class FilmController extends Controller
         $film = Film::where('id', $id)->firstOrFail();
         $film->release_date = Carbon::parse($film->release_date)->format('Y');
 
+        // Gunakan Auth::check() dan Auth::id()
+        $userReview = null;
+        if (Auth::check()) {
+            $userReview = $film->reviews()
+                ->where('user_id', Auth::id())
+                ->first();
+        }
+
         return view('user.films.show', [
-            "film" => $film
+            'film' => $film,
+            'userReview' => $userReview,
         ]);
     }
-
+    
     public function index(Request $request)
     {
         $query = Film::with('genres');

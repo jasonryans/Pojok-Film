@@ -53,11 +53,20 @@ class DevelopmentSeeder extends Seeder
                 $genreIds = Genre::inRandomOrder()->take(rand(1, 3))->pluck('id');
                 $film->genres()->attach($genreIds);
 
-                // Create reviews
-                $reviews = Review::factory(rand(1, 5))->create([
-                    'film_id' => $film->id,
-                    'user_id' => User::inRandomOrder()->first()->id,
-                ]);
+
+                $count = rand(1, 5);
+                $users = User::inRandomOrder()->limit($count)->get();
+
+                $reviews = collect(); // <-- inisialisasi collection kosong
+
+                foreach ($users as $user) {
+                    $review = Review::factory()->create([
+                        'film_id' => $film->id,
+                        'user_id' => $user->id,
+                    ]);
+
+                    $reviews->push($review);
+                }
 
                 $averageRating = $reviews->avg('rating');
 
