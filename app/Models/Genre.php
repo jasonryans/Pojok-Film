@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Genre extends Model
 {
+    protected $fillable = ['name'];
     // app/Models/Genre.php
     public function films() 
     {

@@ -2,10 +2,11 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\FilmController;
-use App\Http\Controllers\Admin\ReviewController;
-use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\ActorController;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\GenreController;
+use App\Http\Controllers\Admin\ReviewController;
+use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\DashboardController;
 
 Route::name('admin.')
@@ -23,4 +24,9 @@ Route::name('admin.')
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+    Route::get('/genres', [GenreController::class, 'index'])->name('genres.index');
+    Route::post('/genres', [GenreController::class, 'store'])->name('genres.store');
+    Route::put('/genres/{id}', [GenreController::class, 'update'])->name('genres.update');
+    Route::delete('/genres/{id}', [GenreController::class, 'destroy'])->name('genres.destroy');
 });
