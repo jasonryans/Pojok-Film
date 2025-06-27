@@ -33,7 +33,7 @@ class FilmController extends Controller
         'duration' => 'required|integer',
         'link_trailer' => 'required|string',
         'poster' => 'nullable|image|mimes:jpg,jpeg,png',
-        'actor' => 'required|array', // TAMBAHAN: wajib pilih minimal 1 aktor
+        'actor' => 'required|array',
     ]);
 
 

@@ -29,14 +29,22 @@
         <div>
             <label class="block font-medium dark:text-gray-200">Foto</label>
             <input type="file" name="photo" class="file-input file-input-bordered w-full dark:text-gray-200">
-            @if($actor->photo)
-                <div class="mt-2">
-                    <img src="{{ asset('storage/' . $actor->photo) }}" alt="Foto" class="w-20 h-20 rounded-full object-cover">
-                </div>
-            @endif
         </div>
         <button type="submit" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded">Update</button>
         <a href="{{ route('admin.actors.index') }}" class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded ml-2">Kembali</a>
     </form>
 </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    @if ($errors->any())
+    <script>
+        Swal.fire({
+            icon: 'error',
+            title: 'Validasi Gagal',
+            html: `{!! implode('<br>', $errors->all()) !!}`,
+            confirmButtonColor: '#d33',
+        });
+    </script>
+    @endif
+
 </x-app-layout>

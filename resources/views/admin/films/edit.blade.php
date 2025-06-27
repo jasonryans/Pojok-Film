@@ -58,11 +58,6 @@
             <div>
                 <label class="dark:text-gray-200">Poster</label>
                 <input type="file" name="poster" class="w-full dark:text-gray-200">
-                @if($film->poster)
-                    <div class="mt-2">
-                        <img src="{{ asset('storage/' . $film->poster) }}" alt="Poster" class="w-24 rounded shadow">
-                    </div>
-                @endif
             </div>
 
             <div>
@@ -83,6 +78,17 @@
     </div>
 
     <!-- Optional: Add JavaScript for Select All functionality -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    @if ($errors->any())
+    <script>
+        Swal.fire({
+            icon: 'error',
+            title: 'Validasi Gagal',
+            html: `{!! implode('<br>', $errors->all()) !!}`,
+            confirmButtonColor: '#d33',
+        });
+    </script>
+    @endif
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Add a "Select All" button if desired

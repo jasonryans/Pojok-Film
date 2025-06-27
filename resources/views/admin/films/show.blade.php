@@ -2,8 +2,9 @@
     <div class="max-w-2xl mx-auto py-8">
         <div class="flex items-start gap-6">
             @if ($film->poster)
-                <img src="{{ asset('storage/' . $film->poster) }}" class="w-32 h-44 object-cover rounded shadow"
-                    alt="{{ $film->name }}">
+            <img src="{{ Str::startsWith($film->poster, 'http') ? $film->poster : asset('storage/' . $film->poster) }}" 
+                class="w-32 h-44 object-cover rounded shadow"
+                alt="{{ $film->name }}">
             @endif
             <div>
                 <h1 class="text-3xl font-bold mb-2 dark:text-gray-200">{{ $film->name }} ({{ $film->release_date }})
@@ -35,8 +36,9 @@
                 @foreach ($film->actors->take(4) as $actor)
                     <div class="flex flex-col items-center">
                         @if ($actor->photo)
-                            <img src="{{ asset('storage/' . $actor->photo) }}"
-                                class="w-10 h-10 rounded-full object-cover mb-1" alt="{{ $actor->name }}">
+                        <img src="{{ Str::startsWith($actor->photo, 'http') ? $actor->photo : asset('storage/' . $actor->photo) }}"
+                            class="w-10 h-10 rounded-full object-cover mb-1"
+                            alt="{{ $actor->name }}">
                         @endif
                         <span class="text-xs text-center dark:text-gray-500 mt-2">{{ $actor->name }}</span>
                     </div>

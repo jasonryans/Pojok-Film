@@ -35,7 +35,11 @@
                 <tr class="border-b hover:bg-gray-50 dark:border-gray-600 dark:hover:bg-gray-700">
                     <td class="py-3 px-4">
                         @if($actor->photo)
-                            <img src="{{ asset('storage/' . $actor->photo) }}" alt="Foto" class="w-12 h-12 rounded-full object-cover">
+                            <img src="{{ Str::startsWith($actor->photo, ['http://', 'https://']) 
+                            ? $actor->photo 
+                            : asset('storage/' . $actor->photo) }}" 
+                            alt="Foto" 
+                            class="w-12 h-12 rounded-full object-cover">
                         @else
                             <span class="italic text-gray-400 dark:text-gray-500">No Image</span>
                         @endif

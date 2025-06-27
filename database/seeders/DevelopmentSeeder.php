@@ -63,7 +63,7 @@ class DevelopmentSeeder extends Seeder
 
                 // Simpan ke kolom rating di tabel film
                 $film->update([
-                    'rating' => $averageRating,
+                    'rating' => round($averageRating,2),
                 ]);
             });
 

@@ -151,6 +151,7 @@
                     $videoId = $matches[1] ?? null;
                 @endphp
                 
+                <p>{{$videoId}}</p>
                 @if($videoId)
                     <iframe
                         class="w-full h-64 md:h-96 lg:h-[500px]"
