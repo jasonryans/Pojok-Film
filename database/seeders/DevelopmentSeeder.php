@@ -10,6 +10,7 @@ use App\Models\Review;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
+
 /**
  * Seeder intended for development purposes.
  * It creates a set of users, actors, films, and reviews to populate the database.

@@ -24,7 +24,7 @@ class ReviewFactory extends Factory
         return [
             'film_id' => Film::factory(),
             'user_id' => User::factory(),
-            'rating' => $this->faker->randomFloat(1, 1, 5),
+            'rating' => $this->faker->numberBetween(1, 10),
             'review' => $this->faker->paragraph(1),
         ];
     }
