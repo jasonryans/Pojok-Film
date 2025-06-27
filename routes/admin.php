@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\ReviewController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\ActorController;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\DashboardController;
 
 Route::name('admin.')
 ->middleware(['auth', 'admin'])
@@ -21,7 +22,5 @@ Route::name('admin.')
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::get('/dashboard', function () {
-        return view('admin.dashboard');
-    })->middleware(['auth', 'verified'])->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 });
