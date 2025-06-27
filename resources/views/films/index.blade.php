@@ -26,7 +26,11 @@
                 <tr class="border-b hover:bg-gray-50">
                     <td class="py-2 px-4">
                         @if($film->poster)
-                            <img src="{{ asset('storage/' . $film->poster) }}" alt="Poster" class="w-16 rounded shadow">
+                            <img 
+                                src="{{ Str::startsWith($film->poster, 'http') ? $film->poster : asset('storage/' . $film->poster) }}" 
+                                alt="Poster" 
+                                class="w-16 rounded shadow"
+                            >
                         @else
                             <span class="italic text-gray-400">No Image</span>
                         @endif
