@@ -4,19 +4,10 @@ namespace Database\Factories;
 
 use App\Models\Film;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Bluemmb\Faker\PicsumPhotosProvider;
-use Faker\Provider\Youtube;
 
 class FilmFactory extends Factory
 {
     protected $model = Film::class;
-
-    public function __construct()
-    {
-        parent::__construct();
-        $this->faker->addProvider(new PicsumPhotosProvider($this->faker));
-        $this->faker->addProvider(new Youtube($this->faker));
-    }
 
     public function definition(): array
     {
