@@ -106,7 +106,7 @@
                                             <div class="flex-shrink-0 h-10 w-10">
                                                 @if($review->user->profile_picture)
                                                     <img class="h-10 w-10 rounded-full object-cover" 
-                                                        src="{{ asset('storage/' . $review->user->profile_picture) }}" 
+                                                        src="{{ $review->user->profilePictureUrl() }}" 
                                                         alt="{{ $review->user->username }}'s profile picture"
                                                         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                                                     <div class="h-10 w-10 rounded-full bg-gradient-to-r from-blue-400 to-purple-500 items-center justify-center hidden">
