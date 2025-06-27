@@ -215,7 +215,7 @@
                                 @if ($movie->rating)
                                     <div class="absolute top-2 right-2">
                                         <span class="bg-yellow-500 text-black px-2 py-1 rounded-lg text-xs font-bold flex items-center">
-                                            <i class="fas fa-star mr-1"></i>{{ $movie->rating }}
+                                            <i class="fas fa-star mr-1"></i>{{ $movie->rating }} / 10
                                         </span>
                                     </div>
                                 @endif
@@ -279,7 +279,7 @@
                                 <!-- Action Buttons -->
                                 <div class="flex space-x-2">
                                     <a href="{{ route('films.show', $movie->id) }}"
-                                        class="flex-1 bg-gradient-to-r from-blue-400 to-blue-500 hover:from-purple-600 hover:to-purple-700 text-white text-center py-2 px-3 rounded-lg font-medium transition-all duration-300 transform hover:scale-105 text-sm">
+                                        class="flex-1 bg-blue-400 hover:bg-purple-700 text-white text-center py-2 px-3 rounded-lg font-medium transition-all duration-300 transform hover:scale-105 text-sm">
                                         <i class="fas fa-eye mr-1"></i>Details
                                     </a>
                                     @if ($movie->link_trailer)

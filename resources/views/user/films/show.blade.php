@@ -6,7 +6,7 @@
     <div class="absolute inset-0 bg-black opacity-20"></div>
     <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <!-- Back Button -->
-        <div class="mb-8 pt-12">
+        <div class="mb-8 pt-16">
             <a href="{{ route('home') }}" class="inline-flex items-center text-white hover:text-blue-200 transition-all duration-300 transform hover:scale-105 group">
                 <div class="p-3 rounded-full bg-white/10 backdrop-blur-sm group-hover:bg-white/20 transition-all duration-300 mr-4">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -110,7 +110,7 @@
             @foreach ($film->actors as $actor)
                 <a href="{{ route('actors.show', $actor->id) }}" class="group cursor-pointer transform transition-all duration-300 hover:scale-110">
                     <div class="bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl p-6 text-center shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-200 group-hover:border-purple-300">
-                        <div class="w-24 h-24 md:w-28 md:h-28 bg-gradient-to-br from-purple-200 to-blue-200 rounded-full mx-auto mb-4 overflow-hidden shadow-lg group-hover:shadow-xl transition-all duration-300">
+                        <div class="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 lg:w-32 lg:h-32 bg-gradient-to-br from-purple-200 to-blue-200 rounded-full mx-auto mb-4 overflow-hidden shadow-lg group-hover:shadow-xl transition-all duration-300">
                             @if ($actor->photo)
                                 <img src="{{ Str::startsWith($actor->photo, 'http') ? $actor->photo : asset('storage/' . $actor->photo) }}" 
                                      alt="{{ $actor->name }}" 
