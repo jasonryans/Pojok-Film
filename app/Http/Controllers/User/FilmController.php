@@ -59,7 +59,8 @@ class FilmController extends Controller
             case 'year':
                 $query->orderBy('release_date', $sortOrder);
                 break;
-            case 'genre':
+            case 'rating':
+                $query->orderBy('rating', $sortOrder);
                 break;
             default:
                 $query->orderBy('release_date', 'desc');
@@ -68,15 +69,15 @@ class FilmController extends Controller
 
         $films = $query->get();
 
-        if ($sortBy === 'genre') {
-            $films = $films->sortBy(function($film) {
-                return $film->genres->first()->name ?? 'ZZZ'; 
-            });
+        // if ($sortBy === 'genre') {
+        //     $films = $films->sortBy(function($film) {
+        //         return $film->genres->first()->name ?? 'ZZZ'; 
+        //     });
             
-            if ($sortOrder === 'desc') {
-                $films = $films->reverse();
-            }
-        }
+        //     if ($sortOrder === 'desc') {
+        //         $films = $films->reverse();
+        //     }
+        // }
 
         $availableYears = Film::selectRaw('YEAR(release_date) as year')
             ->distinct()

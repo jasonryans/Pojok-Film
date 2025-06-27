@@ -119,8 +119,8 @@
                                     {{ request('sort') == 'release_date' ? 'selected' : '' }}>By Year</option>
                                 <option value="title" class="text-gray-800"
                                     {{ request('sort') == 'title' ? 'selected' : '' }}>By Title</option>
-                                <option value="genre" class="text-gray-800"
-                                    {{ request('sort') == 'genre' ? 'selected' : '' }}>By Genre</option>
+                                <option value="rating" class="text-gray-800"
+                                    {{ request('sort') == 'rating' ? 'selected' : '' }}>By Rating</option>
                             </select>
                         </div>
 
