@@ -26,7 +26,7 @@
                         <td class="border px-4 py-2">{{ $review->rating }}/10</td>
                         <td class="border px-4 py-2">{{ $review->review }}</td>
                         <td class="border px-4 py-2">
-                            <form action="{{ route('reviews.destroy', $review->id) }}" method="POST">
+                            <form action="{{ route('admin.reviews.destroy', $review->id) }}" method="POST">
                                 @csrf
                                 @method('DELETE')
                                 <button onclick="return confirm('Hapus komentar ini?')" class="text-red-600">Hapus</button>

@@ -1,27 +1,26 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
-use Carbon\Carbon;
 use App\Models\Film;
 use App\Models\Actor;
 use App\Models\Genre;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
 class FilmController extends Controller
 {
     public function index()
     {
         $films = Film::with('genres')->get();
-        return view('films.index', compact('films'));
+        return view('admin.films.index', compact('films'));
     }
 
     public function create()
     {
         $genres = Genre::all();
         $actors = Actor::all();
-        return view('films.create', compact('genres', 'actors'));
+        return view('admin.films.create', compact('genres', 'actors'));
     }
 
     public function store(Request $request)
@@ -56,7 +55,7 @@ class FilmController extends Controller
         $film->actors()->attach($request->actor); // TAMBAHAN: simpan relasi aktor
 
 
-        return redirect()->route('films.index')->with('success', 'Film berhasil ditambahkan.');
+        return redirect()->route('admin.films.index')->with('success', 'Film berhasil ditambahkan.');
     }
 
     public function edit(Film $film)
@@ -65,7 +64,7 @@ class FilmController extends Controller
         $actors = Actor::all();
         $film->load('actors');
         $film->load('genres');
-        return view('films.edit', compact('film', 'genres', 'actors'));
+        return view('admin.films.edit', compact('film', 'genres', 'actors'));
     }
    
 
@@ -99,7 +98,7 @@ class FilmController extends Controller
         $film->genres()->sync($request->genre);
         $film->actors()->sync($request->actor);
 
-        return redirect()->route('films.index')->with('success', 'Film berhasil diperbarui.');
+        return redirect()->route('admin.films.index')->with('success', 'Film berhasil diperbarui.');
     }
 
 
@@ -108,22 +107,14 @@ class FilmController extends Controller
         $film->genres()->detach();
         $film->actors()->detach();
         $film->delete();
-        return redirect()->route('films.index')->with('success', 'Film berhasil dihapus.');
+        return redirect()->route('admin.films.index')->with('success', 'Film berhasil dihapus.');
     }
 
-        public function show(Film $film)
+    public function show(Film $film)
     {
         // Eager load relasi (genres, actors)
         $film->load(['genres', 'actors']);
-        return view('films.show', compact('film')); 
-    }
-
-    public function showUser($id){
-        $film = Film::where('id', $id)->firstOrFail();
-        $film->release_date = Carbon::parse($film->release_date)->format('Y');
-    
-        return view('user.detailfilm', [
-            "film" => $film
-        ]);
+        $film->link_trailer = preg_replace('/.*(?:youtu\.be\/|v=|\/v\/|embed\/|watch\?v=|&v=)([^&\n?#]+)/', '$1', $film->link_trailer);
+        return view('admin.films.show', compact('film')); 
     }
 }

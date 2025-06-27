@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Models\Actor;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 class ActorController extends Controller
@@ -10,12 +11,12 @@ class ActorController extends Controller
     public function index()
     {
         $actors = Actor::all();
-        return view('actors.index', compact('actors'));
+        return view('admin.actors.index', compact('actors'));
     }
 
     public function create()
     {
-        return view('actors.create');
+        return view('admin.actors.create');
     }
 
     public function store(Request $request)
@@ -41,12 +42,12 @@ class ActorController extends Controller
 
         Actor::create($data);
 
-        return redirect()->route('actors.index')->with('success', 'Aktor berhasil ditambahkan.');
+        return redirect()->route('admin.actors.index')->with('success', 'Aktor berhasil ditambahkan.');
     }
 
     public function edit(Actor $actor)
     {
-        return view('actors.edit', compact('actor'));
+        return view('admin.actors.edit', compact('actor'));
     }
 
     public function update(Request $request, Actor $actor)
@@ -65,20 +66,25 @@ class ActorController extends Controller
             $data['photo'] = $request->file('photo')->store('actors', 'public');
         }
 
+        $data['gender'] = match($data['gender']) {
+            "Laki-laki" => true,
+            "Perempuan" => false
+        };
+
         $actor->update($data);
 
-        return redirect()->route('actors.index')->with('success', 'Aktor berhasil diupdate.');
+        return redirect()->route('admin.actors.index')->with('success', 'Aktor berhasil diupdate.');
     }
 
     public function destroy(Actor $actor)
     {
         $actor->delete();
-        return redirect()->route('actors.index')->with('success', 'Aktor berhasil dihapus.');
+        return redirect()->route('admin.actors.index')->with('success', 'Aktor berhasil dihapus.');
     }
 
     public function show(Actor $actor)
     {
-        return view('actors.show', compact('actor'));
+        return view('admin.actors.show', compact('actor'));
     }
 
 }

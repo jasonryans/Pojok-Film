@@ -23,7 +23,7 @@ class User extends Authenticatable
         'username',
         'email',
         'password',
-        'is_admin', // Add this line
+        'is_admin', 
     ];
 
     /**
@@ -46,7 +46,7 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
-            'is_admin' => 'boolean', // Add this line
+            'is_admin' => 'boolean', 
 
         ];
     }
