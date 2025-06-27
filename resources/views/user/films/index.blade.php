@@ -193,7 +193,8 @@
                             <!-- Movie Poster -->
                             <div class="relative bg-gradient-to-br from-gray-200 to-gray-300 overflow-hidden flex items-center justify-center min-h-80">
                                 @if ($movie->poster)
-                                    <img src="{{ asset('storage/' . $movie->poster) }}" alt="{{ $movie->name }} Poster"
+                                    <img src="{{ Str::startsWith($movie->poster, 'http') ? $movie->poster : asset('storage/' . $movie->poster) }}"
+                                        alt="{{ $movie->name }} Poster"
                                         class="w-full h-auto max-h-96 object-contain group-hover:scale-105 transition-transform duration-500">
                                 @else
                                     <div class="flex items-center justify-center h-80">

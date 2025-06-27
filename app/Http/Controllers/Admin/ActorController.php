@@ -87,4 +87,12 @@ class ActorController extends Controller
         return view('admin.actors.show', compact('actor'));
     }
 
+    public function detail($id){
+        $actor = Actor::where('id', $id)->firstOrFail();
+
+        return view('user.actors.show', [
+            "actor" => $actor
+        ]);
+    }
+
 }

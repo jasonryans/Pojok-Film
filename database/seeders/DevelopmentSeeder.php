@@ -43,18 +43,29 @@ class DevelopmentSeeder extends Seeder
 
         // Create films with actors and reviews
         Film::factory(15)
-            ->has(Actor::factory()->count(3), 'actors')
             ->create()
             ->each(function ($film) {
-                // Add random genres to each film (1-3 genres)
+                // Attach 3 random actors
+                $actorIds = Actor::inRandomOrder()->take(3)->pluck('id');
+                $film->actors()->attach($actorIds);
+
+                // Attach 1-3 genres
                 $genreIds = Genre::inRandomOrder()->take(rand(1, 3))->pluck('id');
                 $film->genres()->attach($genreIds);
 
-                // Create 1-5 reviews for each film
-                Review::factory(rand(1, 5))->create([
+                // Create reviews
+                $reviews = Review::factory(rand(1, 5))->create([
                     'film_id' => $film->id,
                     'user_id' => User::inRandomOrder()->first()->id,
                 ]);
+
+                $averageRating = $reviews->avg('rating');
+
+                // Simpan ke kolom rating di tabel film
+                $film->update([
+                    'rating' => $averageRating,
+                ]);
             });
+
     }
 }

@@ -26,8 +26,8 @@ class FilmFactory extends Factory
             'release_date' => $this->faker->date(),
             'link_trailer' => $this->faker->youtubeUri(),
             'duration' => $this->faker->numberBetween(60, 180),  // Duration in minutes
-            'poster' => $this->faker->imageUrl(640, 480),  // Using Picsum for better movie posters
-            'rating' => $this->faker->randomFloat(1, 1, 5),
+            'poster' => $this->faker->imageUrl(480, 720),  // Using Picsum for better movie posters
+            'rating' => 0,
         ];
     }
 }
