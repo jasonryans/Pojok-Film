@@ -27,9 +27,9 @@ class ReviewController extends Controller
         $average = Review::where('film_id', $film_id)->avg('rating');
 
         // Cek apakah masih ada review yang tersisa
-        $film->rating = $average !== null ? round($average, 2) : null;
+        $film->rating = $average ? round($average, 2) : 0;
         $film->save();
 
-        return redirect()->route('admin.reviews.index')->with('success', 'Komentar berhasil dihapus.');
+        return redirect()->back()->with('success', 'Komentar berhasil dihapus.');
     }
 }

@@ -32,7 +32,7 @@ class FilmController extends Controller
         'release_date' => 'required|date',
         'duration' => 'required|integer',
         'link_trailer' => 'required|string',
-        'poster' => 'nullable|image|mimes:jpg,jpeg,png',
+        'poster' => 'required|image|mimes:jpg,jpeg,png',
         'actor' => 'required|array',
     ]);
 
@@ -77,7 +77,7 @@ class FilmController extends Controller
             'release_date' => 'required|date',
             'duration' => 'required|integer',
             'link_trailer' => 'required|string',
-            'poster' => 'nullable|image|mimes:jpg,jpeg,png',
+            'poster' => 'required|image|mimes:jpg,jpeg,png',
             'actor' => 'required|array',
         ]);
 

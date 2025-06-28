@@ -26,7 +26,7 @@ class ActorController extends Controller
             'born_date' => 'required|date',
             'gender' => 'required|in:Laki-laki,Perempuan',
             'description' => 'nullable|string',
-            'photo' => 'nullable|image|mimes:jpg,jpeg,png'
+            'photo' => 'required|image|mimes:jpg,jpeg,png'
         ]);
 
         $data = $request->only(['name', 'born_date', 'gender', 'description']);
@@ -57,7 +57,7 @@ class ActorController extends Controller
             'born_date' => 'required|date',
             'gender' => 'required|in:Laki-laki,Perempuan',
             'description' => 'nullable|string',
-            'photo' => 'nullable|image|mimes:jpg,jpeg,png'
+            'photo' => 'required|image|mimes:jpg,jpeg,png'
         ]);
 
         $data = $request->only(['name', 'born_date', 'gender', 'description']);
